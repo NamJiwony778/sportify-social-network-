@@ -20,8 +20,7 @@ app.get('/', (req, res) => {
    res.json({ message: "Hello to Sportify"});
 });
 
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -65,3 +64,6 @@ function initial(){
         }
     })
 }
+
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);

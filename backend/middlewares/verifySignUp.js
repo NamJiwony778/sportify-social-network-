@@ -14,7 +14,7 @@ checkDuplicateEmail = (req, res, next) => {
             res.status(400).send({ message: 'Échoué! Cet email est déjà utilisé!'});
             return;
         }
-
+        console.log(req.body.email);
         next();
     });
 };

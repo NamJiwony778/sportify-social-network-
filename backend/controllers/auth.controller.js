@@ -9,12 +9,13 @@ var bcrypt = require("bcryptjs");
 exports.signup = (req, res) => {
   const user = new User({
     first_name: req.body.first_name,
-    family_name: req.body.family_name,
+    last_name: req.body.last_name,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password)
+    password: bcrypt.hashSync(req.body.password, 8)
   });
-
+  
   user.save((err, user) => {
+    // console.log(user);
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -37,7 +38,6 @@ exports.signup = (req, res) => {
               res.status(500).send({ message: err });
               return;
             }
-
             res.send({ message: "L'utilisateur a été enregistré avec succès!" });
           });
         }
@@ -102,7 +102,7 @@ exports.signin = (req, res) => {
       res.status(200).send({
         id: user._id,
         first_name: user.first_name,
-        family_name: user.family_name,
+        last_name: user.last_name,
         email: user.email,
         roles: authorities,
         accessToken: token

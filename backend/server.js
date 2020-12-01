@@ -5,7 +5,8 @@ const cors = require('cors');
 const app = express();
 
 var corsOptions = {
-    origin: 'http://localhost:4200'
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200 // For legacy browser support
 };
 
 app.use(cors(corsOptions));
@@ -16,11 +17,13 @@ app.use(bodyParser.json());
 //parse bodies from URL
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', (req, res) => {
-   res.json({ message: "Hello to Sportify"});
-});
+// app.get('/', (req, res) => {
+// //    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+//    res.json({ message: "Hello to Sportify"});
+// });
 
-
+require('./routes/interest.routes')(app);
+require('./routes/privateInterest.routes')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -29,7 +32,9 @@ app.listen(PORT, () => {
 
 //connect to DB
 const db = require('./models');
-const Role = db.role;
+
+const createTables= require('./helpers/createTables');
+
 
 db.mongoose.connect(`mongodb+srv://admin_sportify:admin_sportify@cluster0.5pmmh.mongodb.net/sportify_db?retryWrites=true&w=majority`,{
     useNewUrlParser: true,
@@ -37,33 +42,14 @@ db.mongoose.connect(`mongodb+srv://admin_sportify:admin_sportify@cluster0.5pmmh.
 })
 .then(() => {
     console.log("Connected to MongoDB");
-    initial();
+    createTables.initial;
+    createTables.createInterest;
 }).catch(err => {
         console.log("error", err);
         process.exit(); 
 });
 
-//create roles 
-function initial(){
-    Role.estimatedDocumentCount((err, count) => {
-        if(!err && count === 0) {
-            new Role({
-                name: 'user'
-            }).save(err => {
-                if (err) {
-                    console.log('error', err);
-                }
-            });
-            new Role ({
-                name: 'admin'
-            }).save(err => {
-                if(err) {
-                    console.log('error', err);
-                }
-            });
-        }
-    })
-}
 
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+

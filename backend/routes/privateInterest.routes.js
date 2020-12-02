@@ -4,7 +4,7 @@ module.exports = app => {
 
     router.post('/', privateInterests.create);
 
-    router.get('/', privateInterests.findAll);
+    router.get('/:id', privateInterests.findAllInterests);
 
     app.use('/api/privateinterests', router);
 };

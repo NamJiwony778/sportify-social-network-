@@ -1,42 +1,55 @@
-// const db = require("../models");
-// const PrivateInterest = db.privateInterests;
 const PrivateInterest = require("../models/privateInterest.model");;
+const Interest = require("../models/interest.model");
+const db = require('../models');
+
 
 exports.create = (req, res) => {
-    if(!req.body._id) {
+    if(!req.body.id_user) {
     res.status(400).send({ message: "Le contenu ne peut pas être vide!" });
     return;
     }
 
-    //create personalInterest 
-    const privateInterest = new PrivateInterest({
-        id_user: req.body._id,
-        id_interest: req.body._id
-    });
+    req.body.id_interest.forEach(interestId => {
+        const privateInterest = new PrivateInterest({
+            id_user: req.body.id_user,
+            id_interest: interestId
+        });
 
-    //save personalInterest to DB
-    privateInterest.save(privateInterest)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message:
-              err.message || "Une erreur s'est produite lors de la création d'interet."
+       const condition = {$and: [
+            {
+            id_user: req.body.id_user
+            },
+            {
+            id_interest: interestId 
+            }
+        ] };
+
+        PrivateInterest.find(condition).then(data => {
+            console.log(data);
+            if(data.length == 0) {
+                privateInterest.save();
+             }
+         });
     });
-  });
 };
 
-//retrieve all interests from database
-exports.findAll = (req, res) => {
- 
-    privateInterest.find().then(data => {
-        console.log(data);
-        res.send(data);
-     }).catch(err => {
-         res.status(500).send({
-           message:
-             err.message || "Une erreur s'est produite lors de la récupération des centres d'intérêt privés."
-         });
-     });
+//retrieve all private interests from database
+exports.findAllInterests = (req, res) => {
+    const id = req.params.id;
+    const condition = {id_user: id};
+    PrivateInterest.find(condition)
+    .populate('id_interest')
+    .exec( function (err, priviteInterests) {
+        if (err) {
+            res.status(500).send({ message: "Error fetching user interests: " + err });
+            console.log("Error fetching user interests: " + err);
+            return;
+        }
+        let userInterests = [];
+        priviteInterests.forEach(item => {
+            userInterests.push(item.id_interest);
+        });
+        console.log("user interests: " + userInterests.length);
+        res.send(userInterests);
+    });
  }

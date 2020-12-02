@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
 
   currentUser: any;
   interests: any;
+  privateinterests: any;
   submitted =false;
 
   selectedIds = [];
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
    //show user's info 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
+    this.showPrivateInterests();
   }
   
   //open modal form
@@ -77,4 +79,17 @@ export class ProfileComponent implements OnInit {
      }
    );   
   }
+
+    //show private interests in the profile
+    public showPrivateInterests(){
+      this.interestsService.getUserInterests(this.currentUser.id).subscribe(
+        data => {
+          this.privateinterests = data;
+          console.log("PI" + data);
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
 }

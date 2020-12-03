@@ -37,21 +37,21 @@
                   {{ interest.name }}
                 </label>
               </div>
-              <input type="submit" value="Ajouter intéres">
+              <input type="submit" value="Ajouter intérêts" (click)="modalRef.hide(); reloadPage()">
             </form>
           </div>
       </ng-template>
     <br>
     
      <strong>Intérêts:</strong>
-  <!--<div *ngFor = "let privateinterest in privateinterests "> -->
-      <!-- <ul>
-      <li >
-    
-      </li>
-      </ul>  -->
+    <div *ngFor = "let privateInterest of privateInterests">
+        <ul>
+          <li>
+           {{privateInterest.name}}
+          </li>
+        </ul>
 
-    <!-- </div> -->
+     </div>
   </div>
   
   <ng-template #loggedOut>

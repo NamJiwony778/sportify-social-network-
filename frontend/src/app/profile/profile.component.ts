@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   currentUser: any;
   interests: any;
-  privateinterests: any;
+  privateInterests: any;
   submitted =false;
 
   selectedIds = [];
@@ -73,6 +73,7 @@ export class ProfileComponent implements OnInit {
      responce => {
        console.log(responce);
        this.submitted = true;
+      
      },
      error => {
        console.log(error);
@@ -80,12 +81,17 @@ export class ProfileComponent implements OnInit {
    );   
   }
 
+  public reloadPage(){
+    window.location.reload();
+  }
+
     //show private interests in the profile
     public showPrivateInterests(){
       this.interestsService.getUserInterests(this.currentUser.id).subscribe(
         data => {
-          this.privateinterests = data;
+          this.privateInterests = data;
           console.log("PI" + data);
+         
         },
         error => {
           console.log(error);

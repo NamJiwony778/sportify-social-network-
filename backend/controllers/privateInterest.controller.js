@@ -1,7 +1,4 @@
-const PrivateInterest = require("../models/privateInterest.model");;
-const Interest = require("../models/interest.model");
-const db = require('../models');
-
+const PrivateInterest = require("../models/privateInterest.model");
 
 exports.create = (req, res) => {
     if(!req.body.id_user) {
@@ -25,7 +22,7 @@ exports.create = (req, res) => {
         ] };
 
         PrivateInterest.find(condition).then(data => {
-            console.log(data);
+            console.log("MyTEST " + data);
             if(data.length == 0) {
                 privateInterest.save();
              }
@@ -49,7 +46,6 @@ exports.findAllInterests = (req, res) => {
         priviteInterests.forEach(item => {
             userInterests.push(item.id_interest);
         });
-        console.log("user interests: " + userInterests.length);
         res.send(userInterests);
     });
  }

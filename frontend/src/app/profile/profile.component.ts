@@ -90,8 +90,6 @@ export class ProfileComponent implements OnInit {
       this.interestsService.getUserInterests(this.currentUser.id).subscribe(
         data => {
           this.privateInterests = data;
-          console.log("PI" + data);
-         
         },
         error => {
           console.log(error);

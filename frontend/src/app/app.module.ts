@@ -17,6 +17,9 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ActivitiesComponent } from './activities/activities.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HomeComponent,
     ProfileComponent,
     BoardAdminComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    ActivitiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ReactiveFormsModule,
     HttpClientModule,
     BsDropdownModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   exports: [BsDropdownModule, ModalModule],
   providers: [authInterceptorProviders],

@@ -24,6 +24,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 require('./routes/interest.routes')(app);
 require('./routes/privateInterest.routes')(app);
+require('./routes/user.routes')(app);
+require('./routes/activity.routes')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -51,5 +53,3 @@ db.mongoose.connect(`mongodb+srv://admin_sportify:admin_sportify@cluster0.5pmmh.
 
 
 require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
-

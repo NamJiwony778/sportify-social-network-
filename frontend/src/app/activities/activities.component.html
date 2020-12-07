@@ -1,0 +1,49 @@
+
+<button type="button" *ngIf="logged" class="btn btn-primary" (click)="openModalForm(formAdd); showCategories()">Ajouter activité</button>
+
+<!-- modal form -->
+<ng-template #formAdd>
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">Ajouter activité</h4>
+      <button type="button" class="close pull-right" 
+              aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="addActivity()">
+        <label for="title">Titre de l’activité:</label><br>
+        <input type="text" formControlName = "title"><br>
+        <h5>Type d’activité:</h5><br>
+        <div class="form-check" *ngFor="let category of categories">
+        <input type="radio" id="{{ category.name }}" value="{{ category._id }}" formControlName = "id_category" (change)="onCheckbox($event)">
+        <label for="{{ category.name }}"> {{ category.name }}</label><br>
+        </div>
+        <br>
+        <label for="participants_quantity">Nombre de membres nécessaires:</label><br>
+        <input type="number" id="participants_quantity" name="participants_quantity" min="1" formControlName ="participants_quantity"><br>
+        <label for="Date">Date de début:</label><br>
+        <input type="date" id="date" name="date" formControlName ="start_date"><br>
+        <label for="Date">Date de fin:</label><br>
+        <input type="date" id="date" name="date" formControlName ="end_date"><br>
+        <label for="address">Lieu de l’activité:</label><br>
+        <input type="text" id="address" name="address" formControlName ="address"><br>
+      <input type="submit" value="Ajouter activité" (click)="modalRef.hide()">
+    </form>
+  </div>
+</ng-template>
+
+<div *ngFor = "let activity of activities">
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><b>Titre: </b>{{ activity.title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted"><b>Sport: </b>{{ activity.id_category.name }}</h6>
+    <p class="card-text"><b>Date de début: </b>{{ activity.start_date}}</p>
+    <p class="card-text"><b>Date de fin: </b>{{ activity.end_date}}</p>
+    <p class="card-text"><b>Nombre de membres: </b>{{ activity.participants_quantity}}</p>
+    <p class="card-text"><b>Adresse: </b>{{ activity.address}}</p>
+    <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
+    <a class="btn btn-primary" routerLink ="/activities/{{activity.id}}" role="button">Détails</a>
+  </div>
+</div>
+</div>

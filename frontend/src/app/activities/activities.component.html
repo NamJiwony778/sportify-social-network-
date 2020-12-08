@@ -43,7 +43,7 @@
     <p class="card-text"><b>Nombre de membres: </b>{{ activity.participants_quantity}}</p>
     <p class="card-text"><b>Adresse: </b>{{ activity.address}}</p>
     <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
-    <a class="btn btn-primary" routerLink ="/activities/{{activity.id}}" role="button">Détails</a>
+    <a class="btn btn-primary" routerLink ="/activities/{{activity._id}}" role="button">Détails</a>
   </div>
 </div>
 </div>

@@ -1,0 +1,62 @@
+<div *ngIf = "activity">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><b>Titre: </b>{{ activity.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"><b>Sport: </b>{{ activity.id_category.name }}</h6>
+        <p class="card-text"><b>Date de début: </b>{{ activity.start_date}}</p>
+        <p class="card-text"><b>Date de fin: </b>{{ activity.end_date}}</p>
+        <p class="card-text"><b>Nombre de membres: </b>{{ activity.participants_quantity}}</p>
+        <p class="card-text"><b>Adresse: </b>{{ activity.address}}</p>
+        <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
+        <a class="btn btn-primary" routerLink ="" role="button" (click)="openModal(template); showCategories()">Mise à jour</a>
+        <a class="btn btn-primary" routerLink ="" role="button" (click)="deleteActivity()">Supprimer</a>
+      </div>
+    </div>
+
+    <ng-template #template>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Mise à jour</h4>
+            <button type="button" class="close pull-right" 
+                    aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body"> 
+              <div style="width: 400px; margin: auto;">
+              <div class="submit-form">
+                <div *ngIf="!submitted">
+                  <div class="form-group">
+              <label for="title">Titre de l’activité:</label><br>
+              <input class="form-control" id="title" required
+              [(ngModel)]="activity.title"  type="text" name = "title"><br>
+              </div>
+
+              <div class="form-group">
+                <h5>Type d’activité:</h5><br>
+                <p> {{ activity.id_category.name}}</p><br>
+              </div>
+              <br>
+
+              <div class="form-group">
+              <label for="participants_quantity">Nombre de membres nécessaires:</label><br>
+              <input type="number"  [(ngModel)]="activity.participants_quantity" id="participants_quantity" name="participants_quantity" min="1" name ="participants_quantity"><br>
+              </div>
+
+              <div class="form-group">
+              <label for="Date">Date de début:</label><br>
+              <input type="date" id="date" name="date" name ="start_date" [(ngModel)]="activity.start_date"><br>
+              </div>
+              <div class="form-group">
+              <label for="Date">Date de fin:</label><br>
+              <input type="date" id="date" name="date" name ="end_date" [(ngModel)]="activity.end_date"><br>
+              </div>
+              <div class="form-group">
+              <label for="address">Lieu de l’activité:</label><br>
+              <input type="text" id="address" name="address" name ="address" [(ngModel)]="activity.address"><br>
+              </div>
+            <input type="submit" value="Mise à jour l'activité" (click)="updateActivity(); modalRef.hide();">
+            </div>
+           </div>
+         </div>
+         </div>
+      </ng-template>

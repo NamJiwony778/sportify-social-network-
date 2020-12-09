@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './services/token-storage.service';
+import { ActivityService } from './services/activity.service';
 
 
 @Component({
@@ -15,8 +16,10 @@ export class AppComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   username: string;
+  searchQuery: any;
+  activity: any;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService,  private activityService: ActivityService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -34,5 +37,17 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  searchItem(): void {
+   this.activityService.findByCategoryUser(this.searchQuery).
+   subscribe(
+    data => {
+      this.activity = data;
+      console.log(data);
+    },
+    error => {
+      console.log(error);
+    });
   }
 }

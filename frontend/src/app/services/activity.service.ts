@@ -62,5 +62,11 @@ export class ActivityService {
     delete(id): Observable<any> {
       return this.http.delete(`${baseUrl}/${id}`);
     }
+
+    
+    findByCategoryUser(searchQuery): Observable<any> {
+      console.log(searchQuery);
+      return this.http.get(`${baseUrl}?searchQuery=${searchQuery}`);
+    }
    
 }

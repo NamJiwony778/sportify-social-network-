@@ -12,8 +12,7 @@ exports.create = (req, res) => {
     });
 
     activity.save().then(data => {
-      res.send(data)
-      console.log("RES " + data);
+      res.send(data);
     }).catch(err => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the Tutorial."
@@ -22,17 +21,27 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-  Activity.find().populate('id_category').populate('id_host')
-    .exec(function (err, activities){
-      if (err) {
-        res.status(500).send({ message: "Error fetching user interests: " + err });
-        console.log("Error fetching user interests: " + err);
-        return;
-      }
-      console.log("ACT  " + activities);
-      res.send(activities);
+    Activity.find().populate('id_category').populate('id_host')
+      .exec(function (err, activities){
+         var results = activities;
+          if (err) {
+            res.status(500).send({ message: "Error fetching user interests: " + err });
+            console.log("Error fetching user interests: " + err);
+            return;
+          }
+          const search = req.query.searchQuery.toLowerCase();
+          if (search){
+            results = activities.filter(activity => filterActivityByQuery(activity, search));
+          }
+          res.send(results);
     });
 }
+
+function filterActivityByQuery(activity, query){
+  const name = activity.id_host.first_name + ' ' + activity.id_host.last_name;
+  return activity.id_category.name.toLowerCase().includes(query) || name.toLowerCase().includes(query);
+}
+
 
 // Find a single Activity with an id
 exports.findOne = (req, res) => {

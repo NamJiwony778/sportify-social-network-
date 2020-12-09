@@ -28,7 +28,7 @@
         <input type="date" id="date" name="date" formControlName ="end_date"><br>
         <label for="address">Lieu de l’activité:</label><br>
         <input type="text" id="address" name="address" formControlName ="address"><br>
-      <input type="submit" value="Ajouter activité" (click)="modalRef.hide()">
+      <input type="submit" value="Ajouter activité" (click)=" reloadPage(); modalRef.hide()">
     </form>
   </div>
 </ng-template>

@@ -7,11 +7,18 @@
         <p class="card-text"><b>Date de fin: </b>{{ activity.end_date}}</p>
         <p class="card-text"><b>Nombre de membres: </b>{{ activity.participants_quantity}}</p>
         <p class="card-text"><b>Adresse: </b>{{ activity.address}}</p>
+        <p><b>Participant:</b></p>
+        <div *ngFor = "let participant of participants">
+          <div *ngIf="this.activity._id === this.participant.id_activity">
+            <p class="card-text"> {{ participant.id_user.first_name}} {{ participant.id_user.last_name}}</p>
+         </div>
+        </div>
         <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
-        <a class="btn btn-primary" routerLink ="" role="button" (click)="openModal(template); showCategories()">Mise à jour</a>
-        <a class="btn btn-primary" routerLink ="" role="button" (click)="deleteActivity()">Supprimer</a>
+        <a class="btn btn-primary"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="openModal(template); showCategories()">Mise à jour</a>
+        <a class="btn btn-primary"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="deleteActivity()">Supprimer</a>
+        <a class="btn btn-primary"  role="button"  *ngIf="this.participants.length &lt; this.activity.participants_quantity && this.currentUser.id != this.activity.id_host._id" (click)="participateInActivity()">S'inscrire</a>
+
       </div>
-    </div>
 
     <ng-template #template>
         <div class="modal-header">
@@ -54,7 +61,7 @@
               <label for="address">Lieu de l’activité:</label><br>
               <input type="text" id="address" name="address" name ="address" [(ngModel)]="activity.address"><br>
               </div>
-            <input type="submit" value="Mise à jour l'activité" (click)="updateActivity(); modalRef.hide();">
+            <input type="submit" value="Mise à jour l'activité" (click)="updateActivity(); modalRef.hide();  reloadPage()">
             </div>
            </div>
          </div>

@@ -77,10 +77,16 @@ export class ActivitiesComponent implements OnInit {
       this.form.value.address,
       this.currentUser.id);
       this.form.reset();
-      this.data = null; 
+      this.data = null;
   }
+
+  public reloadPage(){
+    window.location.reload();
+  }
+
+
   
-   //show private interests in the profile
+  
    public showActivities(){
     this.activityService.getAll().subscribe(
       data => {

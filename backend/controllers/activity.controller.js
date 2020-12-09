@@ -29,6 +29,7 @@ exports.findAll = (req, res) => {
         console.log("Error fetching user interests: " + err);
         return;
       }
+      console.log("ACT  " + activities);
       res.send(activities);
     });
 }

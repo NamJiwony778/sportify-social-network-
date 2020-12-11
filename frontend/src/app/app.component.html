@@ -44,8 +44,11 @@
         </ul>
         </div>
       </nav>
-      <div class="container">
-        <router-outlet></router-outlet>
-      </div>
-    </div> 
+ 
 
+<app-activities [activities] = 'activitiesSearch' *ngIf="router.url.includes('home')"></app-activities>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+</div> 

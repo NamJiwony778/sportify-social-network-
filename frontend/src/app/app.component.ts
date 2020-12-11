@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './services/token-storage.service';
 import { ActivityService } from './services/activity.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +17,9 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username: string;
   searchQuery: any;
-  activity: any;
+  activitiesSearch: any;
 
-  constructor(private tokenStorageService: TokenStorageService,  private activityService: ActivityService) { }
+  constructor(private tokenStorageService: TokenStorageService,  private activityService: ActivityService, public router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -40,11 +40,13 @@ export class AppComponent implements OnInit {
   }
 
   searchItem(): void {
+  if(!this.searchQuery || this.searchQuery.length === 0){
+    return;
+  }
    this.activityService.findByCategoryUser(this.searchQuery).
    subscribe(
     data => {
-      this.activity = data;
-      console.log(data);
+      this.activitiesSearch = data;
     },
     error => {
       console.log(error);

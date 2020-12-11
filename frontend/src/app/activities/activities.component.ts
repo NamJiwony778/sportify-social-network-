@@ -6,12 +6,15 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { TokenStorageService } from '../services/token-storage.service';
 import { ActivityService } from '../services/activity.service';
 
+
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
   styleUrls: ['./activities.component.css']
 })
 export class ActivitiesComponent implements OnInit {
+
+  @Input() activities;
 
   logged = false;
   form: FormGroup;
@@ -21,7 +24,6 @@ export class ActivitiesComponent implements OnInit {
   data: string;
   currentUser: any;
   selectedIdCategory: any;
-  activities:any;
 
   constructor(private modalService: BsModalService, private interestsService: InterestsService, private tokenStorage: TokenStorageService, private activityService: ActivityService) { }
 
@@ -39,7 +41,6 @@ export class ActivitiesComponent implements OnInit {
       end_date: new FormControl(null),
       address: new FormControl(null),
     });
-    
     this.showActivities();
   }   
 
@@ -84,13 +85,11 @@ export class ActivitiesComponent implements OnInit {
     window.location.reload();
   }
 
-
-  
-  
-   public showActivities(){
+  public showActivities(){
     this.activityService.getAll().subscribe(
       data => {
         this.activities = data; 
+        // this.router.navigate(['/home']);
       },
       error => {
         console.log(error);

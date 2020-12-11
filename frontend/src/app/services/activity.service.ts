@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Activity } from '../interfaces/activity';
 import { TokenStorageService } from '../services/token-storage.service';
-import { Observable } from 'rxjs'
+import { Observable } from 'rxjs';
 
 const baseUrl = 'http://localhost:3000/api/activities';
 

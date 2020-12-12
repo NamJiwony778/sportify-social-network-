@@ -29,9 +29,9 @@ exports.findAll = (req, res) => {
             console.log("Error fetching user interests: " + err);
             return;
           }
-          const search = req.query.searchQuery.toLowerCase();
+          const search = req.query.searchQuery;
           if (search){
-            results = activities.filter(activity => filterActivityByQuery(activity, search));
+            results = activities.filter(activity => filterActivityByQuery(activity, search.toLowerCase()));
           }
           res.send(results);
     });
@@ -39,7 +39,10 @@ exports.findAll = (req, res) => {
 
 function filterActivityByQuery(activity, query){
   const name = activity.id_host.first_name + ' ' + activity.id_host.last_name;
-  return activity.id_category.name.toLowerCase().includes(query) || name.toLowerCase().includes(query);
+  const formattedName = name.toLowerCase();
+  const categorySport= activity.id_category.name.toLowerCase();
+  const formattedTitle = activity.title.toLowerCase();
+  return formattedName.includes(query) || categorySport.includes(query) || formattedTitle.includes(query);
 }
 
 

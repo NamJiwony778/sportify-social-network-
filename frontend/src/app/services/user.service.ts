@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const API_URL = 'http://localhost:3000/api/test/';
+const baseUrl = 'http://localhost:3000/api/userprofile'
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,10 @@ export class UserService {
 
   getAdminBoard(): Observable<any> {
     return this.http.get(API_URL + 'admin', {responseType: 'text'});
+  }
+
+  get(id): Observable<any> {
+    console.log("TTTT " + id);
+    return this.http.get(`${baseUrl}/${id}`);
   }
 }

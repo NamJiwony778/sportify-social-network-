@@ -10,10 +10,11 @@
         <p><b>Participant:</b></p>
         <div *ngFor = "let participant of participants">
           <div *ngIf="this.activity._id === this.participant.id_activity">
-            <p class="card-text"> {{ participant.id_user.first_name}} {{ participant.id_user.last_name}}</p>
+            <p class="card-text"><a routerLink="/user-profile/{{ participant.id_user._id }}"> {{ participant.id_user.first_name}} {{ participant.id_user.last_name}}</a></p>
          </div>
         </div>
-        <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
+        <p class="card-text"><b>Organisateur: </b><a routerLink="/user-profile/{{ activity.id_host._id }}">{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</a></p>
+        
         <a class="btn btn-primary"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="openModal(template); showCategories()">Mise à jour</a>
         <a class="btn btn-primary"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="deleteActivity()">Supprimer</a>
         <a class="btn btn-primary"  role="button"  *ngIf="this.participants.length &lt; this.activity.participants_quantity && this.currentUser.id != this.activity.id_host._id" (click)="participateInActivity()">S'inscrire</a>

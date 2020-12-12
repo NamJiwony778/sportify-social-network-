@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   interests: any;
   privateInterests: any;
   submitted =false;
-
+  updated = false;
   selectedIds = [];
 
   constructor(private token: TokenStorageService, private modalService: BsModalService, private interestsService: InterestsService) {
@@ -95,5 +95,17 @@ export class ProfileComponent implements OnInit {
           console.log(error);
         }
       )
+    } 
+
+    public makePrivate(){
+      this.token.update(this.currentUser.id, {id: this.currentUser.id, isPrivate: true}).subscribe(
+          response => {
+            console.log(response);
+            this.updated = true;
+            window.location.reload();
+          },
+          error => {
+            console.log(error);
+          });
     }
 }

@@ -30,11 +30,9 @@ export class ActivityDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.tokenStorage.getUser();
-    console.log("CU "+ this.currentUser.id);
 
     this.getActivity(this.route.snapshot.paramMap.get('_id'));
-    // this.showOrHideButtons();
-  this.showParticipants();
+    this.showParticipants();
   }
 
 
@@ -49,9 +47,6 @@ export class ActivityDetailsComponent implements OnInit {
       data => {
         this.activity = data;
         console.log(data);
-      //   if(this.currentUser.id !=  this.activity.id_host._id && this.activity.participants_quantity <= this.participants.length){
-    
-      //     this.host = true;
       this.showParticipants();
      },
      error => {
@@ -60,15 +55,6 @@ export class ActivityDetailsComponent implements OnInit {
      });
   
   }
-
-//   public showOrHideButtons() {
-//     if(this.currentUser.id !=  this.activity.id_host._id){
-    
-//        this.host = true;
-//     }
-//     console.log("2 "+ this.currentUser.id);
-//     console.log("iiii " + this.activity.id_host._id);
-//  }
 
 updateActivity(): void {
   this.activityService.update(this.activity._id, this.activity)
@@ -119,10 +105,6 @@ deleteActivity(): void {
       this.participantsService.getAll().subscribe(
         data => {
           this.participants = data;
-          console.log("showParticipants()" + JSON.stringify(data));
-          console.log("LLL" + this.participants.length);
-          // if(this.currentUser.id !=  this.activity.id_host._id && this.activity.participants_quantity <= this.participants.length){
- 
         },
         error => {
           console.log(error);

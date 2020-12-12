@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const baseUrl = 'http://localhost:3000/api/participants';
-// const participantsURL = baseUrl + 'participants';
 
 @Injectable({
   providedIn: 'root'

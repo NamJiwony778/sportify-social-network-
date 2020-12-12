@@ -1,0 +1,11 @@
+<p class="card-text"><b>Prenom:</b>{{ chosenUser.user.first_name }}</p>  
+<p class="card-text"><b>Nom:</b> {{ chosenUser.user.last_name }}</p>
+<p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"><b>Email:</b> {{ chosenUser.user.email }}</p>
+<b>Interests:</b>
+<div *ngFor = "let privateinterest of chosenUser.privateinterests">
+<p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ privateinterest.id_interest.name }}</p>
+</div>
+<b>Activities:</b>
+<div *ngFor = "let activity of chosenUser.activities">
+<p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ activity.title}}</p>
+</div>

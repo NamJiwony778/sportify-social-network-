@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
@@ -33,6 +34,7 @@ import { ActivityDetailsComponent } from './activity-details/activity-details.co
     BoardUserComponent,
     ActivitiesComponent,
     ActivityDetailsComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

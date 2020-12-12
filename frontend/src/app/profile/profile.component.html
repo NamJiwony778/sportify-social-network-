@@ -16,6 +16,10 @@
       <strong>Email:</strong>
       {{ currentUser.email }}
     </p>
+    <p>
+      <strong>Private:</strong>
+      {{ currentUser.isPrivate }}
+    </p>
  
     
     <button type="button" class="btn btn-info" 
@@ -54,6 +58,8 @@
      </div>
   </div>
   
+  <input type="submit" value="Faire privé" (click)="makePrivate()">
+
   <ng-template #loggedOut>
     Please login.
   </ng-template>

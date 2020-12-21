@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 const API_URL = 'http://localhost:3000/api/test/';
 const baseUrl = 'http://localhost:3000/api/userprofile'
@@ -9,6 +10,9 @@ const baseUrl = 'http://localhost:3000/api/userprofile'
   providedIn: 'root'
 })
 export class UserService {
+
+  private userSource = new BehaviorSubject('default');
+  currentUser = this.userSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -25,7 +29,10 @@ export class UserService {
   }
 
   get(id): Observable<any> {
-    console.log("TTTT " + id);
     return this.http.get(`${baseUrl}/${id}`);
+  }
+
+  getChosenUser(destinationUser: any){
+    this.userSource.next(destinationUser);
   }
 }

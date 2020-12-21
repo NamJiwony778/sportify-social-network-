@@ -28,6 +28,7 @@ require('./routes/user.routes')(app);
 require('./routes/activity.routes')(app);
 
 
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
@@ -55,3 +56,4 @@ db.mongoose.connect(`mongodb+srv://admin_sportify:admin_sportify@cluster0.5pmmh.
 
 require('./routes/auth.routes')(app);
 require('./routes/participant.route')(app);
+require('./routes/email.routes')(app);

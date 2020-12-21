@@ -20,6 +20,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SendEmailComponent } from './send-email/send-email.component';
 
 
 
@@ -35,6 +36,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ActivitiesComponent,
     ActivityDetailsComponent,
     UserProfileComponent,
+    SendEmailComponent,
   ],
   imports: [
     BrowserModule,

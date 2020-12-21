@@ -9,3 +9,5 @@
 <div *ngFor = "let activity of chosenUser.activities">
 <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ activity.title}}</p>
 </div>
+
+<button type="button" class="btn btn-primary" routerLink="/user-email/{{ chosenUser.user._id }}">Envoyer email</button>

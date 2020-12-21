@@ -18,6 +18,7 @@ export class ActivityService {
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
   
   currentUser = this.tokenStorage.getUser();
+ 
 
   create(title: string, id_category: string, participants_quantity: number, start_date: Date, end_date: Date, address: string, id_host: string): void {
     const data = {

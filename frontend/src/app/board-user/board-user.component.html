@@ -1,1 +1,69 @@
-<!-- <app-activities [logged]="isLoggedIn"></app-activities>   -->
+
+<div class="row">
+<div class="list-group" class="col-3"> 
+  <a (click)="showReceivedEmails()" class="list-group-item list-group-item-action">Boîte de réception</a>
+  <a (click)="showSentEmails()" class="list-group-item list-group-item-action">Messages envoyés</a>
+</div>
+
+
+<div class="list-group" class="col-7" id='template' style="display: none;"> 
+    <ul >
+        <div *ngFor = "let email of emails"  >
+                <li class="list-group-item" *ngIf="this.currentUser.id === email.id_receiver._id">
+                    <a (click)="showEmail()" class="collapsible" >
+                        {{email.id_sender.first_name}} {{email.id_sender.last_name}} Title: {{email.title}}
+                    </a>
+
+
+                    <div class="collapse" id="collapseEmail">
+                    <div class="card card-body" >
+                        <p>{{ email.message }}</p>
+                        
+    
+                     </div>
+                     <button type="button" class="btn btn-primary collapsibleForm"  (click)="showAnswerArea(); hideEmail()">Repondre</button>
+                     
+                    
+                    <div class="f"   style="display: none;" >
+                        <form [formGroup]="form" (ngSubmit)="answerEmail( email.id_sender._id )"> 
+                            <label for="message" class="form-label"><b>Message: </b></label> 
+                            <textarea formControlName = "message" placeholder="Message"  style="height: 100px"></textarea>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                </li>
+               
+         
+           
+        </div>  
+    </ul>
+
+                  
+    
+</div>
+
+<div class="list-group" class="col-7" id='sentEmail' style="display: none;"> 
+    <ul>
+        <div *ngFor = "let email of emails"  >
+                <li class="list-group-item" *ngIf="this.currentUser.id === email.id_sender._id">
+                    <a (click)="showEmail()" class="collapsible" >
+                        {{email.id_sender.first_name}} {{email.id_sender.last_name}} 
+                    </a>
+                    <div class="collapse" id="collapseEmail">
+                    <div class="card card-body" >
+                        <p>{{ email.message }}</p>
+                     </div> 
+                </div>
+                </li>
+        </div>  
+    </ul>  
+</div>
+</div>
+ 
+
+
+
+
+
+

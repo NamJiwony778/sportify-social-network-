@@ -22,7 +22,6 @@ exports.create = (req, res) => {
         ] };
 
         PrivateInterest.find(condition).then(data => {
-            console.log("MyTEST " + data);
             if(data.length == 0) {
                 privateInterest.save();
              }

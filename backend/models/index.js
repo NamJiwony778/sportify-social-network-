@@ -14,6 +14,8 @@ db.privateinterests = require('./privateInterest.model');
 db.activities = require('./activity.model');
 db.participants = require('./participant.model');
 db.emails = require('./email.model');
+db.following = require('./following.model');
+db.follower = require('./follower.model');
 
 db.ROLES = ['user, admin'];
 db.INTERESTS = ['baseball', 'basketball', 'football', 'football américain', 'golf', 'hockey', 'tennis', 'volleyball', 'cyclisme'];

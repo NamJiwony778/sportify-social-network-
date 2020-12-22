@@ -19,4 +19,6 @@ module.exports = function(app){
 
    app.get('/api/userprofile/:id', controller.findOne);
 
+   app.post('/api/userprofile', controller.create);
+
 };

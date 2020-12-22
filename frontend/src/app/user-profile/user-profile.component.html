@@ -10,4 +10,11 @@
 <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ activity.title}}</p>
 </div>
 
+<b>Followers:</b>
+<div *ngFor = "let follower of chosenUser.followers">
+<p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"><a routerLink="/user-profile/{{ follower.id_follower._id }}" > {{ follower.id_follower.first_name}} {{ follower.id_follower.last_name}}</a></p>
+</div>
+
 <button type="button" class="btn btn-primary" routerLink="/user-email/{{ chosenUser.user._id }}">Envoyer email</button>
+
+<button type="button" class="btn btn-info" (click)="followUser(chosenUser.user._id)">Suivre</button>

@@ -35,4 +35,8 @@ export class UserService {
   getChosenUser(destinationUser: any){
     this.userSource.next(destinationUser);
   }
+
+  create(data): Observable<any> {
+    return this.http.post(baseUrl, data);
+  }
 }

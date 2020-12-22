@@ -11,7 +11,6 @@ import { InterestsService } from '../services/interests.service';
 })
 export class ProfileComponent implements OnInit {
   public modalRef: BsModalRef;
-
   currentUser: any;
   interests: any;
   privateInterests: any;

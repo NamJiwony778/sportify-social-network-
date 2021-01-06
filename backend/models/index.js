@@ -16,6 +16,9 @@ db.participants = require('./participant.model');
 db.emails = require('./email.model');
 db.following = require('./following.model');
 db.follower = require('./follower.model');
+db.chat = require('./chat.model');
+db.message = require('./message.model');
+db.chatparticipant = require('./chatparticipant.model');
 
 db.ROLES = ['user, admin'];
 db.INTERESTS = ['baseball', 'basketball', 'football', 'football américain', 'golf', 'hockey', 'tennis', 'volleyball', 'cyclisme'];

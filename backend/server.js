@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
+const server = require('http').createServer(app);
+// const server = app.listen(3000);
+
+
 
 var corsOptions = {
     origin: 'http://localhost:4200',
@@ -17,10 +21,6 @@ app.use(bodyParser.json());
 //parse bodies from URL
 app.use(bodyParser.urlencoded({extended: true}));
 
-// app.get('/', (req, res) => {
-// //    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-//    res.json({ message: "Hello to Sportify"});
-// });
 
 require('./routes/interest.routes')(app);
 require('./routes/privateInterest.routes')(app);
@@ -29,10 +29,10 @@ require('./routes/activity.routes')(app);
 
 
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-});
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`)
+// });
 
 //connect to DB
 const db = require('./models');
@@ -53,7 +53,31 @@ db.mongoose.connect(`mongodb+srv://admin_sportify:admin_sportify@cluster0.5pmmh.
         process.exit(); 
 });
 
+const io = require('socket.io')(server,  {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+    //   allowedHeaders: ["Content-Type, Authorization"],
+       credentials: true
+    }});
+
+server.listen(3000);
+
+//socket io
+io.on('connection', (socket) => {
+  console.log('User connected');
+  socket.on('disconnect', function() {
+    console.log('User disconnected');
+  });
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
+
+
 
 require('./routes/auth.routes')(app);
 require('./routes/participant.route')(app);
 require('./routes/email.routes')(app);
+// require('./routes/chat.routes')(app);

@@ -21,8 +21,11 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SendEmailComponent } from './send-email/send-email.component';
+import { ChatComponent } from './chat/chat.component';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { SendEmailComponent } from './send-email/send-email.component';
     ActivityDetailsComponent,
     UserProfileComponent,
     SendEmailComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +50,7 @@ import { SendEmailComponent } from './send-email/send-email.component';
     HttpClientModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    SocketIoModule.forRoot(config)
   ],
   exports: [BsDropdownModule, ModalModule],
   providers: [authInterceptorProviders],

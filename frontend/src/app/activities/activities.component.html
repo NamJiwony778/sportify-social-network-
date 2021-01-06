@@ -7,8 +7,8 @@
       <h4 class="modal-title pull-left">Ajouter activité</h4>
       <button type="button" class="close pull-right" 
               aria-label="Close" (click)="modalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-  </button>
+              <span aria-hidden="true">&times;</span>
+      </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="form" (ngSubmit)="addActivity()">
@@ -34,7 +34,7 @@
 </ng-template>
 
 <div *ngFor = "let activity of activities">
-<div class="card" style="width: 18rem;">
+ <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title"><b>Titre: </b>{{ activity.title }}</h5>
     <h6 class="card-subtitle mb-2 text-muted"><b>Sport: </b>{{ activity.id_category.name }}</h6>
@@ -45,5 +45,5 @@
     <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
     <a class="btn btn-primary" routerLink ="/activities/{{activity._id}}" role="button">Détails</a>
   </div>
-</div>
+ </div>
 </div>

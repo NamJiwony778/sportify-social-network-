@@ -1,38 +1,34 @@
 
 <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
+    <div class="d-flex justify-content-center login">
+
       <form
         *ngIf="!isLoggedIn"
         name="form"
         (ngSubmit)="f.form.valid && onSubmit()"
         #f="ngForm"
-        novalidate
-      >
+        novalidate>
+
         <div class="form-group">
-          <label for="email">Username</label>
+          <label for="email">Email</label>
           <input
             type="email"
             class="form-control"
             name="email"
             [(ngModel)]="form.email"
             required
-            #email="ngModel"
-          />
+            #email="ngModel"/>
+
           <div
             class="alert alert-danger"
             role="alert"
-            *ngIf="f.submitted && email.invalid"
-          >
-            Username is required!
+            *ngIf="f.submitted && email.invalid">
+            Email est requis!
           </div>
         </div>
+
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Mot de passe</label>
           <input
             type="password"
             class="form-control"
@@ -40,23 +36,21 @@
             [(ngModel)]="form.password"
             required
             minlength="6"
-            #password="ngModel"
-          />
+            #password="ngModel"/>
+
           <div
             class="alert alert-danger"
             role="alert"
-            *ngIf="f.submitted && password.invalid"
-          >
-            <div *ngIf="password.errors.required">Password is required</div>
+            *ngIf="f.submitted && password.invalid">
+            <div *ngIf="password.errors.required">Mot de passe est requis!</div>
             <div *ngIf="password.errors.minlength">
-              Password must be at least 6 characters
+              Le mot de passe doit être au moins de 6 caractères
             </div>
           </div>
         </div>
+
         <div class="form-group">
-          <button class="btn btn-primary btn-block">
-            Login
-          </button>
+          <button class="btn btn-dark btn-block">Se connecter</button>
         </div>
         <div class="form-group">
           <div
@@ -64,13 +58,13 @@
             role="alert"
             *ngIf="f.submitted && isLoginFailed"
           >
-            Login failed: {{ errorMessage }}
+            Connexion échouée!: {{ errorMessage }}
           </div>
         </div>
       </form>
   
       <div class="alert alert-success" *ngIf="isLoggedIn">
-        Logged in as {{ roles }}.
+        Connecté comme 
       </div>
     </div>
   </div>

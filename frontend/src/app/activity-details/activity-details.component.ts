@@ -97,7 +97,6 @@ deleteActivity(): void {
      error => {
        console.log(error);
      });   
-
     }
     
     
@@ -111,5 +110,4 @@ deleteActivity(): void {
         }
       )
     }
-
 }

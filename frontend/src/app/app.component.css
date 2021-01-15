@@ -3,5 +3,11 @@
 }
 
 .navbar-brand,.nav-link{
-    color: #39A1A4;
+    color: #000000;
+    font-family: 'Black Han Sans', sans-serif, cursive;
+}
+
+
+.btn-dark {
+    font-family: 'Black Han Sans', sans-serif, cursive;
 }

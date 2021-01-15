@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -26,7 +27,7 @@ require('./routes/interest.routes')(app);
 require('./routes/privateInterest.routes')(app);
 require('./routes/user.routes')(app);
 require('./routes/activity.routes')(app);
-
+require('./routes/avatar.routes')(app);
 
 
 // const PORT = process.env.PORT || 3000;
@@ -80,4 +81,5 @@ io.on('connection', (socket) => {
 require('./routes/auth.routes')(app);
 require('./routes/participant.route')(app);
 require('./routes/email.routes')(app);
-// require('./routes/chat.routes')(app);
+
+app.use('/uploads', express.static(path.join('uploads')));

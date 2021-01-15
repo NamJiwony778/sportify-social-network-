@@ -1,9 +1,25 @@
 <div class="container" *ngIf="currentUser; else loggedOut">
     <header class="jumbotron">
       <h3>
-        User Profile
+        Profile
       </h3>
     </header>
+    <div class="row">
+      <div class="col-5">
+        <div *ngFor = "let ava of avatar">
+           <img  class="image img-fluid img-thumbnail" src="{{ ava.avatarPath }}">
+        </div>
+        <br>
+        <div class="ava">
+          <form [formGroup]="form" (ngSubmit)="addAvatar()">
+            <label for="avatarImg">Avatar</label>
+            <input type="file" (change)="uploadFile($event)"  id="avatarImg" name="avatarImg" formControlName="avatarImg"/>
+            <input type="submit" class="btn btn-dark" value="Ajouter avatar" >
+          </form>
+        </div>
+ 
+      </div>
+      <div class="col-3">
     <p>
       <strong>Prenom:</strong>
       {{ currentUser.first_name}}
@@ -22,9 +38,9 @@
     </p>
  
     
-    <button type="button" class="btn btn-info" 
+    <button type="button" class="btn btn-dark" 
         (click)="openModal(template); showInterests()">Ajouter intéres</button>
-
+      </div>
         <ng-template #template>
           <div class="modal-header">
               <h4 class="modal-title pull-left">Choisissez vos Intérêts</h4>
@@ -46,21 +62,25 @@
           </div>
       </ng-template>
     <br>
-    
+  
+    <div class="col-3 int">
      <strong>Intérêts:</strong>
     <div *ngFor = "let privateInterest of privateInterests">
-        <ul>
+        <ul class="no-bullets">
           <li>
            {{privateInterest.name}}
           </li>
         </ul>
 
      </div>
-  </div>
-  
-  <input type="submit" value="Faire privé" (click)="makePrivate()">
+     <!-- <a class="btn btn-dark"  role="button" (click)="deleteInterests()">Supprimmer intérêts</a> -->
 
+     
 
+  <input type="submit" value="Faire privé" (click)="makePrivate()" class="btn btn-dark">
+</div>
+</div>
+</div>
   <ng-template #loggedOut>
     Please login.
   </ng-template>

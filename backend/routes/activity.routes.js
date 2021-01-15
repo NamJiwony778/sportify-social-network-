@@ -1,9 +1,10 @@
 module.exports = app => {
     const activities = require('../controllers/activity.controller');
     const router = require("express").Router();
+    const storage = require("../helpers/upload");
 
     // Create a new Activity
-    router.post('/',  activities.create);
+    router.post('/', storage, activities.create);
 
     // Retrieve all Activities
     router.get('/', activities.findAll);

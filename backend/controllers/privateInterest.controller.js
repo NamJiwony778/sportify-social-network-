@@ -48,3 +48,27 @@ exports.findAllInterests = (req, res) => {
         res.send(userInterests);
     });
  }
+
+ exports.delete = (req, res) => {
+    const id_user = req.params.id;
+  
+    PrivateInterest.findByIdAndRemove(id_user)
+    .then(data => {
+        if(!data){
+            res.status(404).send({
+                message: `Cannot delete PrivateInterest with id=${id_user}. Maybe PrivateInterest was not found!`
+            });
+        }else {
+            res.send({
+                message: "PrivateInterest was deleted successfully!"
+              });
+        }  
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Could not delete PrivateInterest with id=" + id_user 
+          });
+    });
+  
+  };
+  

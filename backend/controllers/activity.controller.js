@@ -1,15 +1,35 @@
 const Activity = require('../models/activity.model');
 
 exports.create = (req, res) => {
+   let title = req.body.title;
+   let id_category = req.body.id_category;
+   let imageFile = req.file; 
+   let start_date = req.body.start_date;
+   let end_date = req.body.end_date;
+   let timeEvent = req.body.timeEvent;
+   let participants_quantity = req.body.participants_quantity;
+   let address = req.body.address;
+   let id_host = req.body.id_host;
+
+
+    const imagePath =  'http://localhost:3000/uploads/' + imageFile.filename;
+
     const activity = new Activity({
-        title: req.body.title,
-        id_category: req.body.id_category, 
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        participants_quantity:req.body.participants_quantity,
-        address: req.body.address,
-        id_host: req.body.id_host
+        title,
+        id_category,
+        imagePath, 
+        start_date,
+        end_date,
+        timeEvent,
+        participants_quantity,
+        address,
+        id_host
     });
+
+    console.log(title);
+    console.log("Image:", imagePath);
+    
+    
 
     activity.save().then(data => {
       res.send(data);

@@ -1,8 +1,11 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { TokenStorageService } from '../services/token-storage.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { InterestsService } from '../services/interests.service';
-
+import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AvatarService } from '../services/avatar.service';
+import { Avatar } from '../interfaces/avatar';
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +13,8 @@ import { InterestsService } from '../services/interests.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  @Input() avatarImgs;
+
   public modalRef: BsModalRef;
   currentUser: any;
   interests: any;
@@ -17,17 +22,30 @@ export class ProfileComponent implements OnInit {
   submitted =false;
   updated = false;
   selectedIds = [];
+  privateInterest = null;
+  avatar: Avatar;
+  form: FormGroup;
+  data: string;
+  file:any;
+  message = '';
 
-  constructor(private token: TokenStorageService, private modalService: BsModalService, private interestsService: InterestsService) {
+  constructor(private token: TokenStorageService, private route: ActivatedRoute, private modalService: BsModalService, private interestsService: InterestsService, private avatarService: AvatarService) {
 
    }
 
    //show user's info 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
+    this.getAvatar(this.currentUser.id);
     this.showPrivateInterests();
+
+    this.form = new FormGroup({
+      avatarImg: new FormControl(null)
+    });
   }
-  
+
+
+
   //open modal form
   public openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template); 
@@ -80,9 +98,8 @@ export class ProfileComponent implements OnInit {
    );   
   }
 
-  public reloadPage(){
-    window.location.reload();
-  }
+
+
 
     //show private interests in the profile
     public showPrivateInterests(){
@@ -107,4 +124,45 @@ export class ProfileComponent implements OnInit {
             console.log(error);
           });
     }
+
+    uploadFile(event: Event) {
+      console.log("File is selected!");
+      this.file = (event.target as HTMLInputElement).files[0];
+      console.log('file ' + JSON.stringify(this.file));
+        this.form.patchValue({ avatarImg: this.file});
+      const allowedMileTypes = ['avatarImg/png', 'avatarImg/jpeg', 'avatarImg/jpg'];
+      if (this.file && allowedMileTypes.includes(this.file.type)) {
+           const reader = new FileReader();
+           reader.onload = () => {
+             this.data = reader.result as string;
+          } 
+         reader.readAsDataURL(this.file);  
+       }
+    }
+
+addAvatar() {
+    console.log("aaaaa1 " + this.file);
+    this.avatarService.create(this.file, this.currentUser.id);
+    this.form.reset();
+    this.data = null;
+  }
+
+  public reloadPage(){
+    window.location.reload();
+  }
+
+  getAvatar(id): void {
+    this.avatarService.get(id)
+    .subscribe(
+     data => {
+       this.avatar = data;
+       console.log("3456" + JSON.stringify(data));
+    },
+    error => {
+      console.log(error);
+      this.message = 'Details are not retrieved!';
+    });
+ 
+ }
+
 }

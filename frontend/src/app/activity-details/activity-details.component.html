@@ -1,25 +1,35 @@
 <div *ngIf = "activity">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
+   <div class="container">
+    <div class="row">
+      <div class="col col-7">
+        <img class="card-img-top" src="{{ activity.imagePath }}" alt="Card image cap">
+     </div> 
+     <div class="col col-5">
         <h5 class="card-title"><b>Titre: </b>{{ activity.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted"><b>Sport: </b>{{ activity.id_category.name }}</h6>
+        <p class="card-text"><b>Sport: </b>{{ activity.id_category.name }}</p>
         <p class="card-text"><b>Date de début: </b>{{ activity.start_date}}</p>
         <p class="card-text"><b>Date de fin: </b>{{ activity.end_date}}</p>
+        <p class="card-text"><b>Temps: </b>{{ activity.timeEvent}}</p>
         <p class="card-text"><b>Nombre de membres: </b>{{ activity.participants_quantity}}</p>
         <p class="card-text"><b>Adresse: </b>{{ activity.address}}</p>
-        <p><b>Participant:</b></p>
+
+        <p><b>Participants:</b></p>
         <div *ngFor = "let participant of participants">
           <div *ngIf="this.activity._id === this.participant.id_activity">
             <p class="card-text"><a routerLink="/user-profile/{{ participant.id_user._id }}"> {{ participant.id_user.first_name}} {{ participant.id_user.last_name}}</a></p>
-         </div>
-        </div>
+          </div>
+       
         <p class="card-text"><b>Organisateur: </b><a routerLink="/user-profile/{{ activity.id_host._id }}">{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</a></p>
-        
-        <a class="btn btn-primary"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="openModal(template); showCategories()">Mise à jour</a>
-        <a class="btn btn-primary"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="deleteActivity()">Supprimer</a>
+        </div>
+        <div class="buttons"> 
+        <a class="btn btn-dark"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="openModal(template); showCategories()">Mise à jour</a>
+        <div class="divider"></div>
+        <a class="btn btn-danger"  role="button" *ngIf="this.currentUser.id === this.activity.id_host._id" (click)="deleteActivity()">Supprimer</a>
         <a class="btn btn-primary"  role="button"  *ngIf="this.participants.length &lt; this.activity.participants_quantity && this.currentUser.id != this.activity.id_host._id" (click)="participateInActivity()">S'inscrire</a>
-
+        </div> 
       </div>
+    </div>
+</div>
 
     <ng-template #template>
         <div class="modal-header">
@@ -59,10 +69,14 @@
               <input type="date" id="date" name="date" name ="end_date" [(ngModel)]="activity.end_date"><br>
               </div>
               <div class="form-group">
+              <label for="timeEvent">Temps:</label><br>
+              <input type="text" id="timeEvent" name="timeEvent" name ="timeEvent" [(ngModel)]="activity.time"><br>
+              </div>
+              <div class="form-group">
               <label for="address">Lieu de l’activité:</label><br>
               <input type="text" id="address" name="address" name ="address" [(ngModel)]="activity.address"><br>
               </div>
-            <input type="submit" value="Mise à jour l'activité" (click)="updateActivity(); modalRef.hide();  reloadPage()">
+            <input type="submit" class="btn btn-dark" value="Mise à jour l'activité" (click)="updateActivity(); modalRef.hide();  reloadPage()">
             </div>
            </div>
          </div>

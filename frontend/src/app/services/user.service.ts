@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { Avatar } from '../interfaces/avatar';
 
 const API_URL = 'http://localhost:3000/api/test/';
 const baseUrl = 'http://localhost:3000/api/userprofile'
@@ -13,6 +14,7 @@ export class UserService {
 
   private userSource = new BehaviorSubject('default');
   currentUser = this.userSource.asObservable();
+  readonly url = baseUrl; 
 
   constructor(private http: HttpClient) { }
 
@@ -38,5 +40,18 @@ export class UserService {
 
   create(data): Observable<any> {
     return this.http.post(baseUrl, data);
+  }
+
+  createAvatar(avatar: File): void {
+    const data: any  = new FormData();
+    data.append("avatar", avatar);
+    console.log("aaa " + avatar);
+
+    this.http
+    .post(this.url, data)
+      console.log('img ' + avatar.name);
+      // this.activities.push(activity);
+      // this.activities$.next(this.activities);
+   
   }
 }

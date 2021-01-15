@@ -9,8 +9,10 @@ const Activity = mongoose.model(
                  type: mongoose.Schema.Types.ObjectId,
                  ref: 'Interest'
                 },
+        imagePath: String,
         start_date: Date,
         end_date: Date,
+        timeEvent: String,
         participants_quantity: Number,
         address: String,
         id_host: {

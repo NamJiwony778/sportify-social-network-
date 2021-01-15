@@ -27,6 +27,7 @@ export class AuthService {
     return this.http.post(AUTH_API + 'signup', {
       first_name: user.first_name,
       last_name: user.last_name,
+      avatar: 'http://localhost:3000/uploads/avatar.jpg',
       email: user.email,
       password: user.password,
       isPrivate: false

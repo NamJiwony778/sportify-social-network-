@@ -6,6 +6,7 @@ const baseUrl = 'http://localhost:3000/api/';
 const interestsURL = baseUrl + 'interests';
 const privateInterestsURL = baseUrl + 'privateinterests';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +24,13 @@ export class InterestsService {
 
   create(data): Observable<any> {
     return this.http.post(privateInterestsURL, data);
+  }
+
+  update(id, data): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, data);
+  }
+
+  delete(id): Observable<any> {
+    return this.http.delete(`${privateInterestsURL}/${id}`);
   }
 }

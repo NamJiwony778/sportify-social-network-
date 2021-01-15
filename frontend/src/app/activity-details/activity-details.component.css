@@ -1,0 +1,23 @@
+.btn-dark, .btn-danger{
+    font-family: 'Black Han Sans', sans-serif, cursive;
+    color: white;
+}
+
+img {
+    max-width: 150%;
+    height: auto;
+  }
+
+.container {
+    margin-top: 10%;
+}
+
+.buttons {
+    margin-top: 8%;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}

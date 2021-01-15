@@ -1,5 +1,17 @@
+<div class="jumbotron jumbotron-fluid">
+  <h1 class="display-5">Bienvenue à Sportify</h1>
+  <p class="lead">Le réseau social exclusivement axé sur le sport</p>
+  <!-- <div class="container">
+    <div class="row"> -->
+      <div class="col text-right">
+        <button type="button" *ngIf="logged" class="btn btn-dark" (click)="openModalForm(formAdd); showCategories()">Ajouter activité</button>
+      </div>
+    <!-- </div> 
+  </div> -->
+</div>
 
-<button type="button" *ngIf="logged" class="btn btn-primary" (click)="openModalForm(formAdd); showCategories()">Ajouter activité</button>
+
+
 
 <!-- modal form -->
 <ng-template #formAdd>
@@ -20,30 +32,39 @@
         <label for="{{ category.name }}"> {{ category.name }}</label><br>
         </div>
         <br>
+        
+        <label for="image">Image</label>
+        <input type="file" (change)="uploadFile($event)"  id="image" name="image" formControlName="image"/>
+        
         <label for="participants_quantity">Nombre de membres nécessaires:</label><br>
         <input type="number" id="participants_quantity" name="participants_quantity" min="1" formControlName ="participants_quantity"><br>
-        <label for="Date">Date de début:</label><br>
+        <label for="date">Date de début:</label><br>
         <input type="date" id="date" name="date" formControlName ="start_date"><br>
-        <label for="Date">Date de fin:</label><br>
+        <label for="date">Date de fin:</label><br>
         <input type="date" id="date" name="date" formControlName ="end_date"><br>
+        <label for="timeEvent">Temps:</label><br>
+        <input type="text" id="timeEvent" name="timeEvent" formControlName ="timeEvent"  placeholder="Entrez le temps comme 15:00"><br>
         <label for="address">Lieu de l’activité:</label><br>
         <input type="text" id="address" name="address" formControlName ="address"><br>
-      <input type="submit" value="Ajouter activité" (click)=" reloadPage(); modalRef.hide()">
+      <input type="submit" class="btn btn-dark" value="Ajouter activité" (click)=" reloadPage(); modalRef.hide()">
     </form>
   </div>
 </ng-template>
 
-<div *ngFor = "let activity of activities">
+<div class="card-deck cards">
+<div *ngFor = "let activity of activities" >
  <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title"><b>Titre: </b>{{ activity.title }}</h5>
-    <h6 class="card-subtitle mb-2 text-muted"><b>Sport: </b>{{ activity.id_category.name }}</h6>
-    <p class="card-text"><b>Date de début: </b>{{ activity.start_date}}</p>
-    <p class="card-text"><b>Date de fin: </b>{{ activity.end_date}}</p>
+    <h6 class="card-text"><b>Sport: </b>{{ activity.id_category.name }}</h6>
+    <p class="card-text"><b>Date de début: </b>{{ activity.start_date | date: 'dd/MM/yyyy' }}</p>
+    <p class="card-text"><b>Date de fin: </b>{{ activity.end_date | date: 'dd/MM/yyyy' }}</p>
+    <p class="card-text"><b>Temps: </b>{{ activity.timeEvent }}</p>
     <p class="card-text"><b>Nombre de membres: </b>{{ activity.participants_quantity}}</p>
     <p class="card-text"><b>Adresse: </b>{{ activity.address}}</p>
     <p class="card-text"><b>Organisateur: </b>{{ activity.id_host.first_name }}  {{ activity.id_host.last_name }}</p>
-    <a class="btn btn-primary" routerLink ="/activities/{{activity._id}}" role="button">Détails</a>
+    <a class="btn btn-dark" routerLink ="/activities/{{activity._id}}" role="button">Détails</a>
   </div>
  </div>
+</div>
 </div>

@@ -1,4 +1,4 @@
-
+<div class="container">
 <form [formGroup]="form" (ngSubmit)="sendEmail()">
     <div class="mb-3">
         <p ><b>À:</b> {{ this.destinationUser.user.first_name }} {{ this.destinationUser.user.last_name }}</p>
@@ -7,12 +7,13 @@
         <p ><b>De:</b> {{ currentUser.first_name }} {{ currentUser.last_name }}</p>
     </div>
     <div class="mb-3">
-        <label for="title" class="form-label"><b>Sujet: </b></label> 
+        <label for="title" class="form-label"><b>Sujet: </b></label><br> 
         <input type="text" formControlName = "title">
     </div>
 <div class="form-floating">
-    <label for="message" class="form-label"><b>Message: </b></label> 
+    <label for="message" class="form-label"><b>Message: </b></label><br>
     <textarea formControlName = "message" placeholder="Message"  style="height: 100px"></textarea>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-dark">Submit</button>
   </form>
+</div>

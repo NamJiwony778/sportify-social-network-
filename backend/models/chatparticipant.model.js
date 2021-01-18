@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Chat'
                 },
-            id_user: 
+            id_sender: 
                 { 
                  type: mongoose.Schema.Types.ObjectId,
                  ref: 'User'

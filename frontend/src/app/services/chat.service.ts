@@ -24,20 +24,26 @@ private  messages$ = new Subject<Message[]>();
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private tokenStorage: TokenStorageService) {
     this.socket = io(this.baseUrl);
-   }
-   
-  public sendMessage(message){
+   } 
+
+  currentUser = this.tokenStorage.getUser();
+
+  
+  public sendMessage(message, idUser){
   console.log("dfdd" + message);
-    this.socket.emit('chat message', message);
+  console.log("qqqq " + JSON.stringify(idUser));
+    this.socket.emit('chat message', {message: message, id_sender: idUser});
   }
 
   getMessage(): Observable<any> {
     return Observable.create( observer => {
-       this.socket.on('chat message', (message) => {
-        console.log("my message " + message);
-        observer.next(message)
+       this.socket.on('chat message', ({message: message, id_sender: idUser}) => {
+        // console.log("my message  " +JSON.stringify(message, currentUser));
+        observer.next({message: message, id_sender: idUser});
       });
     });
     
   }
+
+
 }

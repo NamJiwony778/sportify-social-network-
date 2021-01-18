@@ -20,26 +20,31 @@ import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view
 export class ChatComponent implements OnInit {
 
  form: FormGroup;
-//  messages = document.getElementById('messages');
- messages: any;
  messageList:  string[] = [];
+ showMessage = false;
+ currentUser: any;
 
   constructor(private chatService: ChatService, private route: ActivatedRoute, private token: TokenStorageService) {
    }
  
 
   ngOnInit(): void {
+   this.currentUser = this.token.getUser();
+
    this.form = new FormGroup({
       message: new FormControl(null),
    });
 
+   
    this.getMsg();
   }
 
   sendMsg() {
     this.chatService.sendMessage(
-      this.form.value.message
+      this.form.value.message,
+      this.currentUser.id,
     );
+    console.log("dx "+ JSON.stringify(this.currentUser.id));
     this.form.reset();
     }
 
@@ -47,19 +52,27 @@ export class ChatComponent implements OnInit {
     this.chatService.getMessage().subscribe(
       data => {
         this.messageList.push(data);
-        console.log('vvvv ' + data);
+        console.log('vvvv ' + JSON.stringify(data));
+        this.showMessage = true;
       },
       error => {
         console.log(error);
       }
     
     )
-   
-    // var item = document.createElement('li') 
-    // item.textContent = data;
-    // this.messages.appendChild(item);
-    // window.scrollTo(0, document.body.scrollHeight);   
     }
+
+    // addStyle(){
+    //   let showmessages = document.getElementById("msg");
+    
+    //   for (var msg in this.messageList) {
+    //     if (this.currentUser.id) {
+    //       showmessages.style.float = "right";
+    //     } else {
+    //       showmessages.style.float= "left";
+    //     }
+    //   }
+    // }
   }
 
 

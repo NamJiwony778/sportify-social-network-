@@ -5,7 +5,7 @@
     
 //     router.post('/', chat.create);
 
-//     // router.get('/:room', chat.findAll);
+//     router.get('/', chat.findAll);
 
 //     app.use('/api/chat', router);
 // };

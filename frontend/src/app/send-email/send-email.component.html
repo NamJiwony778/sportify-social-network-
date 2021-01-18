@@ -14,6 +14,11 @@
     <label for="message" class="form-label"><b>Message: </b></label><br>
     <textarea formControlName = "message" placeholder="Message"  style="height: 100px"></textarea>
   </div>
-  <button type="submit" class="btn btn-dark">Submit</button>
+  <button type="submit" class="btn btn-dark" >Submit</button>
   </form>
+
+
+<div class="alert alert-success" *ngIf="isSent">
+    Email a été envoyé
+  </div>
 </div>

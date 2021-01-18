@@ -8,10 +8,6 @@ const Message = mongoose.model(
         type: mongoose.Schema.Types.ObjectId,
              ref: 'User'
      },   
-       id_chat: {
-        type: mongoose.Schema.Types.ObjectId,
-             ref: 'Chat'
-     }
     }, {timestamps: true})
 );
 

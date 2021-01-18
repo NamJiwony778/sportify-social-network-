@@ -1,9 +1,51 @@
-<p>chat works!</p>
 
-<ul class="messages" *ngFor="let message of messageList">
+<!-- <ul class="messages" *ngFor="let message of messageList">
   <li>{{ message }}</li>
-</ul>
-    <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
+</ul> 
+     <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
       <input id="m" autocomplete="off" type="text" formControlName = "message"/>
       <button type="submit" class="btn btn-primary">Send</button>
-    </form>
+    </form> -->
+
+    <div class="container content">
+      <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card">
+              <div class="card-header">Chat</div>
+              <div class="card-body height3">
+                <ul class="chat-list">
+                  <li class="in" *ngIf="showMessage">
+                    <div class="chat-img">
+                      <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                    </div>
+                    <div class="chat-body">
+                      <div class="chat-message" >
+                        <ul class="messages" *ngFor="let message of messageList" >
+                          <h5>{{message.id_sender.first_name}} {{message.id_sender.last_name}}</h5>
+                          <li >{{ message.message }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- <li class="out">
+                    <div class="chat-img">
+                      <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                    </div>
+                    <div class="chat-body">
+                      <div class="chat-message" *ngIf="{{currentUser.id === message.id_sender}}">
+                        <ul class="messages" *ngFor="let message of messageList">
+                          <h5>{{currentUser.first_name}} {{currentUser.last_name}}</h5>
+                          <li>{{ message.message }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+            <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
+              <input id="m" autocomplete="off" type="text" formControlName = "message"/>
+              <button type="submit" class="btn btn-primary" >Send</button>
+            </form>
+          </div>
+         

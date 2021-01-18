@@ -1,5 +1,4 @@
-
-<div class="row">
+<!-- <div class="row">
 <div class="list-group" class="col-3"> 
   <a (click)="showReceivedEmails()" class="list-group-item list-group-item-action">Boîte de réception</a>
   <a (click)="showSentEmails()" class="list-group-item list-group-item-action">Messages envoyés</a>
@@ -38,9 +37,6 @@
            
         </div>  
     </ul>
-
-                  
-    
 </div>
 
 <div class="list-group" class="col-7" id='sentEmail' style="display: none;"> 
@@ -59,11 +55,56 @@
         </div>  
     </ul>  
 </div>
-</div>
- 
+</div> -->
 
+<div class="row">
+    <div class="list-group" class="col-3"> 
+      <a (click)="showReceivedEmails()" class="list-group-item list-group-item-action">Boîte de réception</a>
+      <a (click)="showSentEmails()" class="list-group-item list-group-item-action">Messages envoyés</a>
+    </div>
+    
+    
+    <div class="list-group" class="col-7" id='template' *ngIf="isShownList"> 
+        <ul >
+            <div *ngFor = "let email of emails"  >
+                    <li class="list-group-item" *ngIf="this.currentUser.id === email.id_receiver._id">
+                        <a (click)="showEmail()" class="collapsible" >
+                            De: {{email.id_sender.first_name}} {{email.id_sender.last_name}} <br> Title: {{email.title}}
+                        </a>
+                    <div class="message" *ngIf="showMessage">
+                        <p>{{ email.message }}</p> 
+                        <button type="button" class="btn btn-dark collapsibleForm" (click)="showAnswerArea(); hideEmail()">Repondre</button>
+                     </div>
 
+                     <div class="f"  *ngIf="showAnswerForm">
+                        <form [formGroup]="form" (ngSubmit)="answerEmail( email.id_sender._id )"> 
+                            <label for="message" class="form-label"><b>Message: </b></label><br> 
+                            <textarea formControlName = "message" placeholder="Message"  style="height: 100px"></textarea>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    </li>
 
+                    
+            </div>
+        </ul> 
+    
+    </div>
 
+  
 
-
+    <div class="list-group" class="col-7" *ngIf="showSentEmail"> 
+        <ul>
+            <div *ngFor = "let email of emails"  >
+                    <li class="list-group-item" *ngIf="this.currentUser.id === email.id_sender._id">
+                        <a (click)="showEmail()" >
+                        À: {{email.id_sender.first_name}} {{email.id_sender.last_name}} 
+                        </a>
+                        <p>{{ email.message }}</p>
+                        <p>{{email.createdAt | date: 'dd/MM/yyyy hh:mm' }}</p>
+                   
+                    </li>
+            </div>  
+        </ul>  
+    </div>
+    </div>

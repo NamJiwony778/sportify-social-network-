@@ -19,6 +19,7 @@ export class SendEmailComponent implements OnInit {
   form: FormGroup;
   data: any;
   isRead: any;
+  isSent = false;
 
   constructor(private route: ActivatedRoute, private emailService: EmailService, private userService: UserService, private token: TokenStorageService) { }
 
@@ -44,11 +45,15 @@ export class SendEmailComponent implements OnInit {
       this.form.value.message,
       this.isRead
       );
+     
       this.form.reset();
       this.data = null;
+      this.isSent = true;
   }
 
-
+  public reloadPage(){
+    window.location.reload();
+  }
 
 }
 

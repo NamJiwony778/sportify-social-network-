@@ -24,16 +24,16 @@ export class AvatarService {
 
   currentUser = this.tokenStorage.getUser();
 
-  create(avatarImg: File, id_user: string): void {
+  create(image: File, id_user: string): void {
     const data: any  = new FormData();
-    data.append("avatarImg", avatarImg);
+    data.append("image", image);
     data.append("id_user", this.currentUser.id);
     
     this.http
     .post<{ avatarImg: Avatar}>(this.urlAvatar, data)
     .subscribe((data) => {
       const avatar: Avatar = {
-        avatarPath: avatarImg.name,
+        avatarPath: image.name,
         id_user: this.currentUser.id,
       };
       this.avatarImgs.push(avatar);

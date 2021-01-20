@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
     this.showPrivateInterests();
 
     this.form = new FormGroup({
-      avatarImg: new FormControl(null)
+      image: new FormControl(null)
     });
   }
 
@@ -129,8 +129,8 @@ export class ProfileComponent implements OnInit {
       console.log("File is selected!");
       this.file = (event.target as HTMLInputElement).files[0];
       console.log('file ' + JSON.stringify(this.file));
-        this.form.patchValue({ avatarImg: this.file});
-      const allowedMileTypes = ['avatarImg/png', 'avatarImg/jpeg', 'avatarImg/jpg'];
+        this.form.patchValue({ image: this.file});
+      const allowedMileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
       if (this.file && allowedMileTypes.includes(this.file.type)) {
            const reader = new FileReader();
            reader.onload = () => {

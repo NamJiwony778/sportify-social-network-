@@ -34,8 +34,6 @@ export class ChatComponent implements OnInit {
    this.form = new FormGroup({
       message: new FormControl(null),
    });
-
-   
    this.getMsg();
   }
 
@@ -44,7 +42,6 @@ export class ChatComponent implements OnInit {
       this.form.value.message,
       this.currentUser.id,
     );
-    console.log("dx "+ JSON.stringify(this.currentUser.id));
     this.form.reset();
     }
 
@@ -53,27 +50,36 @@ export class ChatComponent implements OnInit {
       data => {
         this.messageList.push(data);
         console.log('vvvv ' + JSON.stringify(data));
-        this.showMessage = true;
+        console.log('b ' + this.currentUser.id);
+        // this.showMessage = true;
+        //  let showmessages = document.getElementById("msg");
+        // if (this.currentUser.id === data.id_sender._id) {
+         
+        //   showmessages.style.float = "right";
+          // showmessages.style.margin = "-80%";
+          //  showmessages.style.padding= "5%";
+        //  }
+
       },
       error => {
         console.log(error);
       }
     
     )
-    }
+    }}
 
-    // addStyle(){
-    //   let showmessages = document.getElementById("msg");
+  //   addStyle(){
+  //     let showmessages = document.getElementById("msg");
     
-    //   for (var msg in this.messageList) {
-    //     if (this.currentUser.id) {
-    //       showmessages.style.float = "right";
-    //     } else {
-    //       showmessages.style.float= "left";
-    //     }
-    //   }
-    // }
-  }
+  //     for (var msg in this.messageList) {
+  //       if (this.currentUser.id) {
+  //         showmessages.style.float = "right";
+  //       } else {
+  //         showmessages.style.float= "left";
+  //       }
+  //     }
+  //   }
+  // }
 
 
   

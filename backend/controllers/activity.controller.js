@@ -12,8 +12,9 @@ exports.create = (req, res) => {
    let id_host = req.body.id_host;
 
 
+   console.log("Image:", imageFile);
     const imagePath =  'http://localhost:3000/uploads/' + imageFile.filename;
-
+    console.log("ImagePath:", imagePath);
     const activity = new Activity({
         title,
         id_category,

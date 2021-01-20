@@ -1,51 +1,57 @@
+<!-- <div class="container content border border-warning rounded" >
+ <ul class="messages" *ngFor="let message of messageList" id="msg">
+  <h5><b>{{message.id_sender.first_name}} {{message.id_sender.last_name}}</b></h5>
+  <li>{{  message.message }}</li>
+ </ul> 
+</div>
+<div class="form">
+ <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
+  <input id="m" autocomplete="off" type="text" formControlName = "message"/>
+  <button type="submit" class="btn btn-dark">Envoyer</button>
+</form>
+</div> -->
+<!-- <ul  *ngFor="let message of messageList" id="msg">
+<li>{{  message.message }}</li>
+</ul> -->
 
-<!-- <ul class="messages" *ngFor="let message of messageList">
-  <li>{{ message }}</li>
-</ul> 
-     <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
+<div class="chat_window">
+  <div class="top_menu">
+    <div class="title">Chat</div>
+  </div>
+  <!-- <ul class="messages"></ul> -->
+  <div class="bottom_wrapper clearfix">
+      <!-- <div class="message_input_wrapper"> -->
+        <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
+         
+          <div class="icon"></div>
+            <button type="submit" class="text" class="btn btn-dark">Envoyer</button>
+         
+          <input id="m" autocomplete="off" formControlName = "message"  />
+       
+        </form>
+          <!-- <input class="message_input" placeholder="Type your message here..." />
+      </div> -->
+      <!-- <div class="send_message">
+          <div class="icon"></div>
+          <div class="text">Send</div>
+      </div> -->
+  <!-- </div> -->
+</div>
+<!-- <div class="message_template"> -->
+  <!-- <li class="message"> -->
+      <!-- <div class="avatar"></div> -->
+      <div class="text_wrapper">
+          <!-- <div class="text"></div> -->
+          <ul  *ngFor="let message of messageList" >
+            <li><b>{{message.id_sender.first_name}} {{message.id_sender.last_name}}</b></li>
+            <li>{{  message.message }}</li>
+           </ul> 
+      </div>
+  <!-- </li> -->
+<!-- </div> -->
+     <!--<form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
       <input id="m" autocomplete="off" type="text" formControlName = "message"/>
       <button type="submit" class="btn btn-primary">Send</button>
     </form> -->
 
-    <div class="container content">
-      <div class="row">
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-            <div class="card">
-              <div class="card-header">Chat</div>
-              <div class="card-body height3">
-                <ul class="chat-list">
-                  <li class="in" *ngIf="showMessage">
-                    <div class="chat-img">
-                      <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                    </div>
-                    <div class="chat-body">
-                      <div class="chat-message" >
-                        <ul class="messages" *ngFor="let message of messageList" >
-                          <h5>{{message.id_sender.first_name}} {{message.id_sender.last_name}}</h5>
-                          <li >{{ message.message }}</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <!-- <li class="out">
-                    <div class="chat-img">
-                      <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
-                    </div>
-                    <div class="chat-body">
-                      <div class="chat-message" *ngIf="{{currentUser.id === message.id_sender}}">
-                        <ul class="messages" *ngFor="let message of messageList">
-                          <h5>{{currentUser.first_name}} {{currentUser.last_name}}</h5>
-                          <li>{{ message.message }}</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li> -->
-                </ul>
-              </div>
-            </div>
-            <form action="" [formGroup]="form" (ngSubmit)="sendMsg()">
-              <input id="m" autocomplete="off" type="text" formControlName = "message"/>
-              <button type="submit" class="btn btn-primary" >Send</button>
-            </form>
-          </div>
-         
+    

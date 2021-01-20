@@ -1,15 +1,14 @@
 
-.btn-dark{
+.btn-danger, .btn-dark{
     font-family: 'Black Han Sans', sans-serif, cursive;
     margin: 1.5%;
 }
  .cards {
     display:flex;
-    flex-direction: row-reverse;
+    flex-direction: column-reverse;
     flex-wrap: wrap;
     justify-content: center;
-    margin-left: 5%;
-    margin-right: 5%;
+    align-items: center;
 } 
 
 .jumbotron {
@@ -22,10 +21,12 @@
     width: 100%;
 }
 
-.card {
-    margin-top: 5%;
-}
+.cards{
+    max-width: 1900px;}
 
 h1, .lead {
     margin-left: 20px;
+}
+h5{
+    margin-top: 15px;
 }

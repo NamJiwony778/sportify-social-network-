@@ -1,17 +1,7 @@
-<div class="jumbotron jumbotron-fluid">
-  <h1 class="display-5">Bienvenue à Sportify</h1>
-  <p class="lead">Le réseau social exclusivement axé sur le sport</p>
-  <!-- <div class="container">
-    <div class="row"> -->
+
       <div class="col text-right">
-        <button type="button" *ngIf="logged" class="btn btn-dark" (click)="openModalForm(formAdd); showCategories()">Ajouter activité</button>
+        <button type="button" *ngIf="logged" class="btn btn-danger" (click)="openModalForm(formAdd); showCategories()">Ajouter activité</button>
       </div>
-    <!-- </div> 
-  </div> -->
-</div>
-
-
-
 
 <!-- modal form -->
 <ng-template #formAdd>
@@ -33,8 +23,8 @@
         </div>
         <br>
         
-        <label for="image">Image</label>
-        <input type="file" (change)="uploadFile($event)"  id="image" name="image" formControlName="image"/>
+        <label for="imagePath">Image</label>
+        <input type="file" (change)="uploadFile($event)"  id="imagePath" name="imagePath" formControlName="imagePath"/>
         
         <label for="participants_quantity">Nombre de membres nécessaires:</label><br>
         <input type="number" id="participants_quantity" name="participants_quantity" min="1" formControlName ="participants_quantity"><br>
@@ -51,10 +41,11 @@
   </div>
 </ng-template>
 
-<div class="card-deck cards">
+<div class=" cards" >
 <div *ngFor = "let activity of activities" >
- <div class="card" style="width: 18rem;">
+ <div class="card" style="width: 60rem;">
   <div class="card-body">
+    <img src="{{ activity.imagePath }}" class="card-img-top" alt="...">
     <h5 class="card-title"><b>Titre: </b>{{ activity.title }}</h5>
     <h6 class="card-text"><b>Sport: </b>{{ activity.id_category.name }}</h6>
     <p class="card-text"><b>Date de début: </b>{{ activity.start_date | date: 'dd/MM/yyyy' }}</p>
@@ -68,3 +59,5 @@
  </div>
 </div>
 </div>
+
+

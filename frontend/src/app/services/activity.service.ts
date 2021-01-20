@@ -35,6 +35,8 @@ export class ActivityService {
     data.append("address", address);
     data.append("id_host", this.currentUser.id);
 
+    
+
      this.http
         .post<{ activity: Activity }>(this.url, data)
         .subscribe((data) => {

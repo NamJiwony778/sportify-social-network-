@@ -22,9 +22,9 @@ const storage = multer({ storage: diskStorage, fileFilter: fileFilter }).single(
   'image'
 );
 
-const storage2 = multer({ storage: diskStorage, fileFilter: fileFilter }).single( 
-  'avatarImg'
-);
+// const storage2 = multer({ storage: diskStorage, fileFilter: fileFilter }).single( 
+//   'avatarImg'
+// );
 
 module.exports = storage;
-module.exports = storage2
+// module.exports = storage2;

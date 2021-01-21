@@ -3,6 +3,7 @@ const PrivateInterest = require('../models/privateInterest.model');
 const Activity = require('../models/activity.model');
 const Following = require('../models/following.model');
 const Follower = require('../models/follower.model');
+const Avatar = require('../models/avatar.model');
 
   exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -28,6 +29,7 @@ const Follower = require('../models/follower.model');
       }
       const condition = {id_user: id};
       let privateInterests = await PrivateInterest.find(condition).populate('id_interest');
+      let avatar = await Avatar.find(condition).populate('id_user');
 
       if (!privateInterests) {
         res.status(500).send({ message: "Error fetching user interests: " + err });
@@ -37,9 +39,10 @@ const Follower = require('../models/follower.model');
 
 
 
+
     const condition1 = {id_following: id};
     console.log("cond1" + JSON.stringify(condition1));
-    let followings = await Following.find(condition1).populate('id_user');
+    let followings = await Following.find(condition1).populate('id_following');
 
     if (!followings) {
       res.status(500).send({ message: "Error fetching following: " + err });
@@ -74,7 +77,8 @@ const Follower = require('../models/follower.model');
       privateinterests: privateInterests,
       activities: activities,
       followings: followings,
-      followers: followers
+      followers: followers,
+      avatar: avatar
     };
     console.log(result);
     res.send(result);

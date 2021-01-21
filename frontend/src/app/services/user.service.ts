@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-import { Avatar } from '../interfaces/avatar';
+
 
 const API_URL = 'http://localhost:3000/api/test/';
 const baseUrl = 'http://localhost:3000/api/userprofile'
@@ -50,8 +50,5 @@ export class UserService {
     this.http
     .post(this.url, data)
       console.log('img ' + avatar.name);
-      // this.activities.push(activity);
-      // this.activities$.next(this.activities);
-   
   }
 }

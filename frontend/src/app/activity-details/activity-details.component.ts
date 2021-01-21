@@ -110,4 +110,8 @@ deleteActivity(): void {
         }
       )
     }
+
+    public reloadPage(){
+      window.location.reload();
+    }
 }

@@ -1,34 +1,132 @@
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-           <p class="card-text"><b>Prenom:</b>{{ chosenUser.user.first_name }}</p>  
-           <p class="card-text"><b>Nom:</b> {{ chosenUser.user.last_name }}</p>
-           <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"><b>Email:</b> {{ chosenUser.user.email }}</p>
-        </div>
-        <div class="col-3">
-            <b>Interests:</b>
-            <div *ngFor = "let privateinterest of chosenUser.privateinterests">
-            <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ privateinterest.id_interest.name }}</p>
-        </div><br>
-    </div>
-    <div class="col-3">
-            <b>Activities:</b>
-            <div *ngFor = "let activity of chosenUser.activities">
-            <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ activity.title}}</p>
-            </div><br>
-    </div>
-    <div class="col-3">
-            <b>Followers:</b>
-            <div *ngFor = "let follower of chosenUser.followers">
-            <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"><a routerLink="/user-profile/{{ follower.id_follower._id }}" > {{ follower.id_follower.first_name}} {{ follower.id_follower.last_name}}</a></p>
+
+   
+       
+
+
+
+  <div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div *ngFor = "let ava of chosenUser.avatar">
+                      <img  class="image img-fluid img-thumbnail" src="{{ ava.avatarPath }}">
+                     </div>
+
+
+                    <div class="mt-3">
+                      <h4>{{ chosenUser.user.first_name }} {{ chosenUser.user.last_name }}</h4>
+                      <div class="buttons">
+                        <button type="button" class="btn btn-dark" routerLink="/user-email/{{ chosenUser.user._id }}">Envoyer email</button>
+            
+                        <button type="button" class="btn btn-warning" (click)="followUser(chosenUser.user._id)">Suivre</button>
+            
+                        <button type="button" class="btn btn-dark" routerLink="/chat">Chat</button>
+                    </div>    
+        
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nom</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ chosenUser.user.first_name }} {{ chosenUser.user.last_name }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ chosenUser.user.email }}
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="chosenUser.user.isPrivate">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Private:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      Le profil est privé
+                    </div>
+                    <hr>
+                  </div>
+                  
+                  <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Intérêts:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <div *ngFor = "let privateinterest of chosenUser.privateinterests">
+                        <ul class="no-bullets">
+                          <li>
+                           {{privateinterest.id_interest.name }}
+                          </li>
+                        </ul>
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+                 
+                  <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0" >Activities:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <div *ngFor = "let activity of chosenUser.activities">
+                            <p class="card-text" *ngIf="!this.chosenUser.user.isPrivate"> {{ activity.title}}</p>
+                        </div><br>
+                    </div>
+                    <hr>
+                  </div>
+                  
+                  <!-- <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Followers:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <div *ngFor = "let follower of chosenUser.followers">
+                        <ul class="no-bullets">
+                          <li>
+                           {{follower.id_follower.first_name }}
+                           {{follower.id_follower.last_name }}
+                          </li>
+                        </ul>
+                        </div>
+                      </div>
+                    </div>
+                  <hr>
+                  <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Followings:</h6>
+                    </div>
+                  <div class="col-sm-9 text-secondary" *ngif="chosenUser.user.id === followers.id_follower.id_user">
+                    <div *ngFor = "let follower of chosenUser.followers">
+                      <ul class="no-bullets">
+                        <li>
+                            {{follower.id_follower.first_name }}
+                            {{follower.id_follower.last_name }}
+                        </li>
+                      </ul>
+                      </div>
+                    </div>
+                    <hr> -->
+                  
+                
+                </div>
+              </div>    
+          </div>
+        </div>
     </div>
-        <div class="buttons">
-            <button type="button" class="btn btn-dark" routerLink="/user-email/{{ chosenUser.user._id }}">Envoyer email</button>
-
-            <button type="button" class="btn btn-warning" (click)="followUser(chosenUser.user._id)">Suivre</button>
-
-            <button type="button" class="btn btn-dark" routerLink="/chat">Chat</button>
-        </div>    
- </div>
 </div>
+

@@ -19,6 +19,9 @@ export class AvatarService {
   private  avatarImgs$ = new Subject<Avatar[]>();
   readonly   urlAvatar = 'http://localhost:3000/api/avatar';
 
+  
+ 
+
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) { }
 

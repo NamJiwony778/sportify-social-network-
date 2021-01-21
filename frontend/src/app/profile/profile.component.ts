@@ -6,6 +6,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AvatarService } from '../services/avatar.service';
 import { Avatar } from '../interfaces/avatar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,9 @@ export class ProfileComponent implements OnInit {
   file:any;
   message = '';
 
+  avaPath =[];
+  subscription: Subscription;
+
   constructor(private token: TokenStorageService, private route: ActivatedRoute, private modalService: BsModalService, private interestsService: InterestsService, private avatarService: AvatarService) {
 
    }
@@ -39,12 +43,19 @@ export class ProfileComponent implements OnInit {
     this.getAvatar(this.currentUser.id);
     this.showPrivateInterests();
 
+    console.log("ac" + JSON.stringify(this.currentUser));
+
     this.form = new FormGroup({
       image: new FormControl(null)
     });
+
+    // this.subscription = this.avatarService.currentAvatar.subscribe(avaPath => this.avaPath = avaPath);
+
   }
 
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   //open modal form
   public openModal(template: TemplateRef<any>) {

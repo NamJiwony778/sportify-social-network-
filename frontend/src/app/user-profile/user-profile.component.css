@@ -1,15 +1,38 @@
+
 .btn-dark, .btn-warning{
     font-family: 'Black Han Sans', sans-serif, cursive;
-    margin: 5px;
+    margin: 1.5%;
 }
 
-.container{
+.no-bullets{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.avatar {
+    max-width: 50%;
+}
+
+.col-5{
+  margin-right: -15%;
+}
+
+li{
+    line-height: 355%;
+}
+
+ p {
+  line-height: 210%;
+}
+
+.row{
     display:flex;
     justify-content: center;
-    margin-top:10%;
+    flex-wrap: nowrap;
+    margin-top:5%;
 }
 
-.buttons{
-    margin:5% auto;
-    display:block;
+.image {
+    max-width: 85%;
 }

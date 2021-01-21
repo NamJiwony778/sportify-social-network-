@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { Subscription } from 'rxjs'
+import { AvatarService } from '../services/avatar.service';
+import { InterestsService } from '../services/interests.service';
+import { Avatar } from '../interfaces/avatar';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,13 +19,19 @@ export class UserProfileComponent implements OnInit {
   message = '';
   currentUser: any;
   submitted =false;
+  avatar: Avatar;
 
-  constructor( private route: ActivatedRoute, private userService: UserService, private token: TokenStorageService) { }
+  destinationAvatar: any;
+  avaPath:string;
+  subscription: Subscription;
+
+  constructor( private route: ActivatedRoute, private userService: UserService, private token: TokenStorageService, private interestsService: InterestsService, private avatarService: AvatarService) { }
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
     this.getUser(this.route.snapshot.paramMap.get('_id'));
     
+ 
     
   }
 
@@ -45,11 +55,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   followUser(_id): void  {
-    console.log("IDIIII" + _id);
+    console.log("IDIIII" + this.chosenUser.user._id);
     const data = {
       id_user: this.currentUser.id,
-      id_following:_id
+      id_following:this.chosenUser.user._id
     };
+    console.log("Data " + JSON.stringify(data));
 
     this.userService.create(data)
     .subscribe(
@@ -63,9 +74,4 @@ export class UserProfileComponent implements OnInit {
       }
     );   
   }
-
-  public reloadPage(){
-    window.location.reload();
-  }
-
 }

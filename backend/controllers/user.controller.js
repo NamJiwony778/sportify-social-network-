@@ -19,14 +19,14 @@ const Avatar = require('../models/avatar.model');
 
 
   exports.findOne = async(req, res) => {
-    const id = req.params.id;
-    let user = await User.findById(id);
-
-    if (!user) {
-        res.status(500).send({ message: "Error fetching user interests: " + err });
-        console.log("Error fetching user interests: " + err);
+      const id = req.params.id;
+      let user = await User.findById(id);
+      if (!user) {
+        res.status(500).send({ message: "Error fetching user: " + err });
+        console.log("Error fetching user: " + err);
         return;
       }
+
       const condition = {id_user: id};
       let privateInterests = await PrivateInterest.find(condition).populate('id_interest');
       let avatar = await Avatar.find(condition).populate('id_user');
@@ -35,42 +35,35 @@ const Avatar = require('../models/avatar.model');
         res.status(500).send({ message: "Error fetching user interests: " + err });
         console.log("Error fetching user interests: " + err);
         return;
-    }
+      }
+ 
+      const condition1 = {id_following: id};
+      // console.log("cond1" + JSON.stringify(condition1));
+      let followings = await Following.find(condition1).populate('id_user');
 
+      if (!followings) {
+        res.status(500).send({ message: "Error fetching following: " + err });
+        console.log("Error fetching following: " + err);
+        return;
+      }
 
+      const condition2 = {id_user: id};
+      let followers = await Follower.find(condition2).populate('id_follower');
 
-
-    const condition1 = {id_following: id};
-    console.log("cond1" + JSON.stringify(condition1));
-    let followings = await Following.find(condition1).populate('id_following');
-
-    if (!followings) {
-      res.status(500).send({ message: "Error fetching following: " + err });
-      console.log("Error fetching following: " + err);
-      return;
-    }
-
-    const condition2 = {id_user: id};
-    let followers = await Follower.find(condition2).populate('id_follower');
-
-    if (!followers) {
-      res.status(500).send({ message: "Error fetching user interests: " + err });
-      console.log("Error fetching user interests: " + err);
-      return;
-  }
-      
-    const cond = {id_host: id};
-    let activities = await Activity.find(cond).populate('id_category');
-      
-    if (!activities) {
-      res.status(500).send({ message: "Error fetching user interests: " + err });
-      console.log("Error fetching user interests: " + err);
-      return;
-  }
-
-
-
-
+      if (!followers) {
+        res.status(500).send({ message: "Error fetching user followers: " + err });
+        console.log("Error fetching user followers: " + err);
+        return;
+      }
+          
+      const cond = {id_host: id};
+      let activities = await Activity.find(cond).populate('id_category');
+          
+      if (!activities) {
+          res.status(500).send({ message: "Error fetching activities: " + err });
+          console.log("Error fetching activities: " + err);
+          return;
+      }
 
     let result = {
       user: user,
@@ -80,6 +73,7 @@ const Avatar = require('../models/avatar.model');
       followers: followers,
       avatar: avatar
     };
+
     console.log(result);
     res.send(result);
   }
@@ -93,8 +87,8 @@ exports.create = (req, res) => {
 
    
         const following = new Following({
-            id_user: req.body.id_user,
-            id_following: req.body.id_following
+            id_user: req.body.id_following,
+            id_following: req.body.id_user
         });
 
         const follower = new Follower({
@@ -105,10 +99,10 @@ exports.create = (req, res) => {
 
       const conditionFollowing = {$and: [
         {
-        id_user: req.body.id_user
+        id_user: req.body.id_following
         },
         {
-        id_following: req.body.id_following
+        id_following: req.body.id_user
         }
     ] };
 

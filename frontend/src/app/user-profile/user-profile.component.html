@@ -1,9 +1,4 @@
 
-   
-       
-
-
-
   <div class="container">
     <div class="main-body">
           <div class="row gutters-sm">
@@ -89,8 +84,8 @@
                     </div>
                     <hr>
                   </div>
-                  
-                  <!-- <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                   
+                  <div class="row" *ngIf="!chosenUser.user.isPrivate">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Followers:</h6>
                     </div>
@@ -105,22 +100,22 @@
                         </div>
                       </div>
                     </div>
-                  <hr>
-                  <div class="row" *ngIf="!chosenUser.user.isPrivate">
+                  <hr> 
+                   <div class="row" *ngIf="!chosenUser.user.isPrivate">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Followings:</h6>
                     </div>
-                  <div class="col-sm-9 text-secondary" *ngif="chosenUser.user.id === followers.id_follower.id_user">
-                    <div *ngFor = "let follower of chosenUser.followers">
+                  <div class="col-sm-9 text-secondary">
+                    <div *ngFor = "let following of chosenUser.followings">
                       <ul class="no-bullets">
-                        <li>
-                            {{follower.id_follower.first_name }}
-                            {{follower.id_follower.last_name }}
+                        <li >
+                            {{following.id_user.first_name }}
+                            {{following.id_user.last_name }}
                         </li>
                       </ul>
                       </div>
                     </div>
-                    <hr> -->
+                    <hr>
                   
                 
                 </div>

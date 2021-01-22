@@ -25,14 +25,11 @@ export class UserProfileComponent implements OnInit {
   avaPath:string;
   subscription: Subscription;
 
-  constructor( private route: ActivatedRoute, private userService: UserService, private token: TokenStorageService, private interestsService: InterestsService, private avatarService: AvatarService) { }
+  constructor(private route: ActivatedRoute, private userService: UserService, private token: TokenStorageService, private interestsService: InterestsService, private avatarService: AvatarService) { }
 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
     this.getUser(this.route.snapshot.paramMap.get('_id'));
-    
- 
-    
   }
 
   getUser(_id): void {
@@ -42,7 +39,7 @@ export class UserProfileComponent implements OnInit {
         this.chosenUser = data;
         this.userService.currentUser.subscribe(destinationUser => this.destinationUser = this.chosenUser);
         this.getDestination();
-        console.log(data);
+        console.log("User" +JSON.stringify(data));
      },
      error => {
        console.log(error);
@@ -55,12 +52,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   followUser(_id): void  {
-    console.log("IDIIII" + this.chosenUser.user._id);
+    // console.log("IDIIII" + this.chosenUser.user._id);
     const data = {
       id_user: this.currentUser.id,
       id_following:this.chosenUser.user._id
     };
-    console.log("Data " + JSON.stringify(data));
+    // console.log("Data " + JSON.stringify(data));
 
     this.userService.create(data)
     .subscribe(

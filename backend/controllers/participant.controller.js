@@ -13,28 +13,17 @@ exports.create = (req, res) => {
 
     const condition = {$and: [
         {
-        id_user: req.body.id_user
+         id_user: req.body.id_user
         },
         {
-        id_activity: req.body.id_activity
+         id_activity: req.body.id_activity
         }
     ] };
 
     Participant.find(condition).then(data => {
         if(data.length == 0) {
             participant.save();
-         }
-    });
+        }
+      });
     }
 
-    exports.findAll = (req,res) => {
-        Participant.find().populate('id_user')
-        .exec(function (err, participants){
-           if(err){
-               res.status(500).send({ message: "Error" });
-               return;
-           }
-           res.send(participants);
-        });
-    }
-    

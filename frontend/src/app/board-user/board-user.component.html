@@ -68,7 +68,7 @@
         <ul >
             <div *ngFor = "let email of emails"  >
                     <li class="list-group-item" *ngIf="this.currentUser.id === email.id_receiver._id">
-                        <a (click)="showEmail()" class="collapsible" >
+                        <a (click)="showEmail()" class="collapsible">
                             De: {{email.id_sender.first_name}} {{email.id_sender.last_name}} <br> Title: {{email.title}}
                         </a>
                     <div class="message" *ngIf="showMessage">
@@ -79,7 +79,7 @@
                      <div class="f"  *ngIf="showAnswerForm">
                         <form [formGroup]="form" (ngSubmit)="answerEmail( email.id_sender._id )"> 
                             <label for="message" class="form-label"><b>Message: </b></label><br> 
-                            <textarea formControlName = "message" placeholder="Message"  style="height: 100px"></textarea>
+                            <textarea formControlName = "message" placeholder="Message"  style="height: 100px; width: 100% "></textarea>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>

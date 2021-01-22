@@ -34,6 +34,10 @@ export class UserService {
     return this.http.get(`${baseUrl}/${id}`);
   }
 
+  // getFollowers(id): Observable<any> {
+  //   return this.http.get(`${baseUrl}/${id}`);
+  // }
+
   getChosenUser(destinationUser: any){
     this.userSource.next(destinationUser);
   }
@@ -45,7 +49,6 @@ export class UserService {
   createAvatar(avatar: File): void {
     const data: any  = new FormData();
     data.append("avatar", avatar);
-    console.log("aaa " + avatar);
 
     this.http
     .post(this.url, data)

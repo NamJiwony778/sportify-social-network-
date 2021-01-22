@@ -1,4 +1,5 @@
 const Activity = require('../models/activity.model');
+const Participant  = require('../models/participant.model');
 
 exports.create = (req, res) => {
    let title = req.body.title;
@@ -68,18 +69,27 @@ function filterActivityByQuery(activity, query){
 
 
 // Find a single Activity with an id
-exports.findOne = (req, res) => {
+exports.findOne = async(req, res) => {
     const id = req.params.id;
 
-    Activity.findById(id).populate('id_category').populate('id_host')
-    .exec(function (err, activity){
-      if (err) {
-        res.status(500).send({ message: "Error fetching user interests: " + err });
-        console.log("Error fetching user interests: " + err);
-        return;
-      }
-      res.send(activity);
-    });
+    let activity = await Activity.findById(id).populate('id_category').populate('id_host');
+    
+    let condition = {id_activity: id};
+
+    let participant = await Participant.find(condition).populate('id_user').catch(err => {
+      res.status(500).send({
+          message: "Error updating Activity with participant=" + id
+   });
+  });
+
+
+      let result = {
+        activity:activity,
+        participant: participant
+      };
+
+      console.log(result);
+      res.send(result); 
 };
 
 // Update an Activity by the id in the request

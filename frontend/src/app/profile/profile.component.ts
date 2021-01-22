@@ -6,7 +6,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AvatarService } from '../services/avatar.service';
 import { Avatar } from '../interfaces/avatar';
-import { Subscription } from 'rxjs';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   public modalRef: BsModalRef;
   currentUser: any;
   interests: any;
+  friends:any;
   privateInterests: any;
   submitted =false;
   updated = false;
@@ -29,11 +31,11 @@ export class ProfileComponent implements OnInit {
   data: string;
   file:any;
   message = '';
-
+  activityList =[];
   avaPath =[];
-  subscription: Subscription;
+  followings: any;
 
-  constructor(private token: TokenStorageService, private route: ActivatedRoute, private modalService: BsModalService, private interestsService: InterestsService, private avatarService: AvatarService) {
+  constructor(private token: TokenStorageService, private route: ActivatedRoute, private modalService: BsModalService, private interestsService: InterestsService, private avatarService: AvatarService, private userService: UserService) {
 
    }
 
@@ -42,19 +44,12 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.token.getUser();
     this.getAvatar(this.currentUser.id);
     this.showPrivateInterests();
-
-    console.log("ac" + JSON.stringify(this.currentUser));
+    this.getFriends();
 
     this.form = new FormGroup({
       image: new FormControl(null)
     });
 
-    // this.subscription = this.avatarService.currentAvatar.subscribe(avaPath => this.avaPath = avaPath);
-
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   //open modal form
@@ -167,7 +162,6 @@ addAvatar() {
     .subscribe(
      data => {
        this.avatar = data;
-       console.log("3456" + JSON.stringify(data));
     },
     error => {
       console.log(error);
@@ -176,4 +170,16 @@ addAvatar() {
  
  }
 
+ getFriends() {
+   this.userService.get(this.currentUser.id).subscribe(
+    data => {
+      this.friends = data.followers;
+      this.followings = data.followings;
+     console.log("Friends" + JSON.stringify(data));
+    },
+    error => {
+      console.log(error);
+    }
+  )
+ }
 }

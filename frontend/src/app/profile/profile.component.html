@@ -78,12 +78,33 @@
                       </div>
                     </div>
                   <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Followers:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <div *ngFor = "let friend of friends">
+                        <ul class="no-bullets">
+                          <li>
+                         {{ friend.id_follower.first_name}} {{ friend.id_follower.last_name}}
+                      </li>
+                      </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
                         <div class="row">
                           <div class="col-sm-3">
-                            <h6 class="mb-0">Follower</h6>
+                            <h6 class="mb-0">Followings:</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            {{ currentUser.first_name}} {{ currentUser.last_name}}
+                            <div *ngFor = "let friend of followings">
+                              <ul class="no-bullets">
+                                <li>
+                               <a routerLink="/user-profile/{{ friend.id_user._id }}">{{ friend.id_user.first_name}} {{ friend.id_user.last_name}}</a>
+                            </li>
+                            </ul>
+                            </div>
                           </div>
                         </div>
                         <hr>

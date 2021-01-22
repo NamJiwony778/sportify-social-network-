@@ -32,7 +32,7 @@ export class ActivityDetailsComponent implements OnInit {
     this.currentUser = this.tokenStorage.getUser();
 
     this.getActivity(this.route.snapshot.paramMap.get('_id'));
-    this.showParticipants();
+    // this.showParticipants();
   }
 
 
@@ -45,9 +45,8 @@ export class ActivityDetailsComponent implements OnInit {
      this.activityService.get(_id)
      .subscribe(
       data => {
-        this.activity = data;
-        console.log(data);
-      this.showParticipants();
+        this.activity = data.activity;
+        this.participants = data.participant;
      },
      error => {
        console.log(error);
@@ -99,18 +98,6 @@ deleteActivity(): void {
      });   
     }
     
-    
-    public showParticipants(){
-      this.participantsService.getAll().subscribe(
-        data => {
-          this.participants = data;
-        },
-        error => {
-          console.log(error);
-        }
-      )
-    }
-
     public reloadPage(){
       window.location.reload();
     }

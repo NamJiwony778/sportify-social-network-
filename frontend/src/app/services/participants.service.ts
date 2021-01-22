@@ -11,10 +11,6 @@ export class ParticipantsService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any> {
-    return this.http.get(baseUrl);
-  }
-
   create(data): Observable<any> {
     return this.http.post(baseUrl, data);
   }

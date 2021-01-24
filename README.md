@@ -1,6 +1,6 @@
 # Sportify
 
-Sportify is a student's project, social network for organazing sport activities, chatting and email exchange, MEAN stack powered. 
+Sportify is a student's project, a social network for organizing sports activities, chatting and email exchange, MEAN stack powered. 
 
   - MongoDB
   - Express.js

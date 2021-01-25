@@ -1,0 +1,15 @@
+.btn-dark, .btn-warning{
+    font-family: 'Black Han Sans', sans-serif, cursive;
+    margin: 5px;
+}
+
+.container {
+    display:flex;
+    justify-content: center;
+    margin-top:10%;
+}
+
+.alert {
+    max-width: 75%;
+    margin: 0 auto;
+}

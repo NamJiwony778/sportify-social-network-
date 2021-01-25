@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Avatar } from '../interfaces/avatar';
+import { Subject } from 'rxjs';
+
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const baseUrl = 'http://localhost:3000/api/profilestatus';
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenStorageService {
 
-  constructor() { }
+
+
+  constructor(private http: HttpClient) { }
 
   signOut(): void {
     window.sessionStorage.clear();
@@ -33,4 +44,10 @@ export class TokenStorageService {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
 
-}
+  update(id, data): Observable<any> {
+    return this.http.post(baseUrl, data);
+  }
+   
+  }
+
+

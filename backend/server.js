@@ -1,8 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
+const server = require('http').createServer(app);
+// const server = app.listen(3000);
+
+
 
 var corsOptions = {
     origin: 'http://localhost:4200',
@@ -17,18 +22,18 @@ app.use(bodyParser.json());
 //parse bodies from URL
 app.use(bodyParser.urlencoded({extended: true}));
 
-// app.get('/', (req, res) => {
-// //    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-//    res.json({ message: "Hello to Sportify"});
-// });
 
 require('./routes/interest.routes')(app);
 require('./routes/privateInterest.routes')(app);
+require('./routes/user.routes')(app);
+require('./routes/activity.routes')(app);
+require('./routes/avatar.routes')(app);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`)
-});
+
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`)
+// });
 
 //connect to DB
 const db = require('./models');
@@ -49,7 +54,64 @@ db.mongoose.connect(`mongodb+srv://admin_sportify:admin_sportify@cluster0.5pmmh.
         process.exit(); 
 });
 
+const io = require('socket.io')(server,  {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+    //   allowedHeaders: ["Content-Type, Authorization"],
+       credentials: true
+    }});
+
+server.listen(3000);
+
+//socket io
+// io.on('connection', (socket) => {
+//   console.log('User connected');
+//   socket.on('disconnect', function() {
+//     console.log('User disconnected');
+//   });
+//   socket.on('chat message', (msg) => {
+//     console.log('message: ' + msg);
+//     io.emit('chat message', msg);
+//   });
+// });
+
+
+const Message =  require('./models/message.model');
+
+io.on('connection', (socket) => {
+  console.log('User connected');
+
+  socket.on('disconnect', function() {
+    console.log('User disconnected');
+  });
+  socket.on('chat message', ({message: msg, id_sender: idUser}) => {
+    console.log('message: ' + msg);
+    const message = new Message ({
+      message: msg, 
+      id_sender: idUser
+    });
+
+    message.save(function(err){
+      if(err) {
+        throw err
+      } else{
+        Message.findOne({message: msg}).populate('id_sender').exec(function (err, msg){
+          var results = msg;
+          if (err) {
+            res.status(500).send({ message: "Error fetching user interests: " + err });
+            console.log("Error fetching user interests: " + err);
+            return;
+          }
+          io.emit('chat message', results);
+          });
+      }
+    })
+  })
+});
 
 require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
+require('./routes/participant.route')(app);
+require('./routes/email.routes')(app);
 
+app.use('/uploads', express.static(path.join('uploads')));

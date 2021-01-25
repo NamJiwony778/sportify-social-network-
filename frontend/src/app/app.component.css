@@ -1,0 +1,13 @@
+.navbar-custom { 
+    background-color: #EDD820;
+}
+
+.navbar-brand,.nav-link{
+    color: #000000;
+    font-family: 'Black Han Sans', sans-serif, cursive;
+}
+
+
+.btn-dark {
+    font-family: 'Black Han Sans', sans-serif, cursive;
+}

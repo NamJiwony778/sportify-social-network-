@@ -1,7 +1,12 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { TokenStorageService } from '../services/token-storage.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { InterestsService } from '../services/interests.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AvatarService } from '../services/avatar.service';
+import { Avatar } from '../interfaces/avatar';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -10,23 +15,43 @@ import { InterestsService } from '../services/interests.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public modalRef: BsModalRef;
+  @Input() avatarImgs;
 
+  public modalRef: BsModalRef;
   currentUser: any;
   interests: any;
+  friends:any;
+  privateInterests: any;
   submitted =false;
-
+  updated = false;
   selectedIds = [];
+  privateInterest = null;
+  avatar: Avatar;
+  form: FormGroup;
+  data: string;
+  file:any;
+  message = '';
+  activityList =[];
+  avaPath =[];
+  followings: any;
 
-  constructor(private token: TokenStorageService, private modalService: BsModalService, private interestsService: InterestsService) {
+  constructor(private token: TokenStorageService, private route: ActivatedRoute, private modalService: BsModalService, private interestsService: InterestsService, private avatarService: AvatarService, private userService: UserService) {
 
    }
 
    //show user's info 
   ngOnInit(): void {
     this.currentUser = this.token.getUser();
+    this.getAvatar(this.currentUser.id);
+    this.showPrivateInterests();
+    this.getFriends();
+
+    this.form = new FormGroup({
+      image: new FormControl(null)
+    });
+
   }
-  
+
   //open modal form
   public openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template); 
@@ -71,10 +96,90 @@ export class ProfileComponent implements OnInit {
      responce => {
        console.log(responce);
        this.submitted = true;
+      
      },
      error => {
        console.log(error);
      }
    );   
   }
+
+
+
+
+    //show private interests in the profile
+    public showPrivateInterests(){
+      this.interestsService.getUserInterests(this.currentUser.id).subscribe(
+        data => {
+          this.privateInterests = data;
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    } 
+
+    public makePrivate(){
+      this.token.update(this.currentUser.id, {id: this.currentUser.id, isPrivate: true}).subscribe(
+          response => {
+            console.log(response);
+            this.updated = true;
+            window.location.reload();
+          },
+          error => {
+            console.log(error);
+          });
+    }
+
+    uploadFile(event: Event) {
+      console.log("File is selected!");
+      this.file = (event.target as HTMLInputElement).files[0];
+      console.log('file ' + JSON.stringify(this.file));
+        this.form.patchValue({ image: this.file});
+      const allowedMileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      if (this.file && allowedMileTypes.includes(this.file.type)) {
+           const reader = new FileReader();
+           reader.onload = () => {
+             this.data = reader.result as string;
+          } 
+         reader.readAsDataURL(this.file);  
+       }
+    }
+
+addAvatar() {
+    console.log("aaaaa1 " + this.file);
+    this.avatarService.create(this.file, this.currentUser.id);
+    this.form.reset();
+    this.data = null;
+  }
+
+  public reloadPage(){
+    window.location.reload();
+  }
+
+  getAvatar(id): void {
+    this.avatarService.get(id)
+    .subscribe(
+     data => {
+       this.avatar = data;
+    },
+    error => {
+      console.log(error);
+      this.message = 'Details are not retrieved!';
+    });
+ 
+ }
+
+ getFriends() {
+   this.userService.get(this.currentUser.id).subscribe(
+    data => {
+      this.friends = data.followers;
+      this.followings = data.followings;
+     console.log("Friends" + JSON.stringify(data));
+    },
+    error => {
+      console.log(error);
+    }
+  )
+ }
 }

@@ -1,0 +1,32 @@
+
+.btn-danger, .btn-dark{
+    font-family: 'Black Han Sans', sans-serif, cursive;
+    margin: 1.5%;
+}
+ .cards {
+    display:flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+} 
+
+.jumbotron {
+    background-image: url("http://localhost:3000/uploads/girl.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Black Han Sans', sans-serif, cursive;
+    max-width: 100%;
+    width: 100%;
+}
+
+.cards{
+    max-width: 1900px;}
+
+h1, .lead {
+    margin-left: 20px;
+}
+h5{
+    margin-top: 15px;
+}

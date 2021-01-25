@@ -4,7 +4,9 @@ module.exports = app => {
 
     router.post('/', privateInterests.create);
 
-    router.get('/', privateInterests.findAll);
+    router.get('/:id', privateInterests.findAllInterests);
+    
+    router.delete("/:id", privateInterests.delete);
 
     app.use('/api/privateinterests', router);
 };

@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseUrl = 'http://localhost:3000/api/interests';
-const url = 'http://localhost:3000/api/privateinterests';
+const baseUrl = 'http://localhost:3000/api/';
+const interestsURL = baseUrl + 'interests';
+const privateInterestsURL = baseUrl + 'privateinterests';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,22 @@ export class InterestsService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get(baseUrl);
+    return this.http.get(interestsURL);
   }
   
-  get(id): Observable<any> {
-    return this.http.get(`${url}/${id}`)
+  getUserInterests(id): Observable<any> {
+    return this.http.get(`${privateInterestsURL}/${id}`)
   }
 
   create(data): Observable<any> {
-    return this.http.post(url, data);
+    return this.http.post(privateInterestsURL, data);
+  }
+
+  update(id, data): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, data);
+  }
+
+  delete(id): Observable<any> {
+    return this.http.delete(`${privateInterestsURL}/${id}`);
   }
 }

@@ -1,56 +1,141 @@
 <div class="container" *ngIf="currentUser; else loggedOut">
-    <header class="jumbotron">
-      <h3>
-        User Profile
-      </h3>
-    </header>
-    <p>
-      <strong>Prenom:</strong>
-      {{ currentUser.first_name}}
-    </p>
-    <p>
-      <strong>Nom:</strong>
-      {{ currentUser.last_name}}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{ currentUser.email }}
-    </p>
- 
-    
-    <button type="button" class="btn btn-info" 
-        (click)="openModal(template); showInterests()">Ajouter intéres</button>
-
-        <ng-template #template>
-          <div class="modal-header">
-              <h4 class="modal-title pull-left">Choisissez vos Intérêts</h4>
-              <button type="button" class="close pull-right" 
-                      aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          </div>
-          <div class="modal-body">
-            <form (ngSubmit)="savePrivateInterest()">
-              <div class="form-check" *ngFor="let interest of interests; let i = index">
-                <input class="form-check-input" type="checkbox" name="{{ interest.name }}" id="{{ interest.name }}" value="{{ interest._id }}" (change)="onCheckboxChange($event)">
-                <label class="form-check-label" for="{{ interest.name }}">
-                  {{ interest.name }}
-                </label>
-              </div>
-              <input type="submit" value="Ajouter intéres">
-            </form>
-          </div>
-      </ng-template>
+      
     <br>
-    
-    <strong>Intérêts:</strong>
-    <ul>
-      <li >
-        <!-- {{ role }} -->
-      </li>
-    </ul>
   </div>
-  
+
+  <div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <div *ngFor = "let ava of avatar">
+                      <img  class="image img-fluid img-thumbnail" src="{{ ava.avatarPath }}">
+                   </div>
+
+                   <div class="ava">
+                    <form [formGroup]="form" (ngSubmit)="addAvatar()">
+                      <label for="image">Avatar</label>
+                      <input type="file" (change)="uploadFile($event)"  id="image" name="image" formControlName="image"/>
+                      <input type="submit" class="btn btn-dark" value="Ajouter avatar" >
+                    </form>
+                  </div>
+
+                    <div class="mt-3">
+                      <h4>{{ currentUser.first_name}} {{ currentUser.last_name}}</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nom</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ currentUser.first_name}} {{ currentUser.last_name}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ currentUser.email }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Private:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="submit" value="Faire privé" (click)="makePrivate()" class="btn btn-dark">
+                      {{ currentUser.isPrivate }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Intérêts::</h6>
+                    
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <button type="button" class="btn btn-dark" 
+                      (click)="openModal(template); showInterests()">Ajouter intéres</button>
+                      <div *ngFor = "let privateInterest of privateInterests">
+                        <ul class="no-bullets">
+                          <li>
+                           {{privateInterest.name}}
+                          </li>
+                        </ul>
+                        </div>
+                      </div>
+                    </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Followers:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <div *ngFor = "let friend of friends">
+                        <ul class="no-bullets">
+                          <li>
+                         {{ friend.id_follower.first_name}} {{ friend.id_follower.last_name}}
+                      </li>
+                      </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <h6 class="mb-0">Followings:</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                            <div *ngFor = "let friend of followings">
+                              <ul class="no-bullets">
+                                <li>
+                               <a routerLink="/user-profile/{{ friend.id_user._id }}">{{ friend.id_user.first_name}} {{ friend.id_user.last_name}}</a>
+                            </li>
+                            </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <hr>
+                </div>
+              </div>    
+          </div>
+        </div>
+    </div>
+
+
+    <ng-template #template>
+      <div class="modal-header">
+          <h4 class="modal-title pull-left">Choisissez vos Intérêts</h4>
+          <button type="button" class="close pull-right" 
+                  aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="savePrivateInterest()">
+          <div class="form-check" *ngFor="let interest of interests; let i = index">
+            <input class="form-check-input" type="checkbox" name="{{ interest.name }}" id="{{ interest.name }}" value="{{ interest._id }}" (change)="onCheckboxChange($event)">
+            <label class="form-check-label" for="{{ interest.name }}">
+              {{ interest.name }}
+            </label>
+          </div>
+          <input type="submit" value="Ajouter intérêts" (click)="modalRef.hide(); reloadPage()">
+        </form>
+      </div>
+    </ng-template>
+
   <ng-template #loggedOut>
     Please login.
   </ng-template>
